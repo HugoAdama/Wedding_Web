@@ -4,7 +4,7 @@ Sitio web estático para invitación de boda construido con **Astro 7**, arquite
 
 🌐 **Sitio Web en Vivo**: [https://hugoadama.github.io/Wedding_Web/](https://hugoadama.github.io/Wedding_Web/)
 
-> 📚 **Documentación Completa**: Consulta la carpeta [`docs/`](./docs/README.md) para guías detalladas de [Arquitectura](./docs/architecture.md), [Personalización](./docs/customization-guide.md), [Privacidad y RSVP](./docs/privacy-and-rsvp.md) y [Despliegue](./docs/deployment.md).
+> 📚 **Documentación Completa**: Consulta la carpeta [`docs/`](./docs/README.md) para guías detalladas de [Arquitectura](./docs/architecture.md), [Personalización](./docs/customization-guide.md), [Privacidad y RSVP](./docs/privacy-and-rsvp.md), [Despliegue](./docs/deployment.md) y [Aprendizajes](./docs/learnings.md).
 
 ---
 

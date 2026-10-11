@@ -31,6 +31,12 @@ Bienvenido a la documentación técnica, de mantenimiento y de personalización 
    - Configuración de GitHub Pages (Source: GitHub Actions).
    - Soporte para dominios personalizados o subrutas de repositorios mediante variables de entorno (`SITE_URL`, `BASE_PATH`).
 
+5. [**Aprendizajes y Lecciones Técnicas**](./learnings.md):
+   - Lecciones aprendidas en Astro 7 y Node 22 en CI/CD.
+   - Resolución de sensibilidad a mayúsculas/minúsculas en GitHub Pages (`Wedding_Web`).
+   - Arquitectura zero-backend con WhatsApp, Web Audio API y `<dialog>` nativo.
+   - Métricas y rendimiento alcanzado (Lighthouse 98-100).
+
 ---
 
 ## 🌿 Principios de Diseño del Proyecto
