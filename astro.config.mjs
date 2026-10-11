@@ -2,9 +2,13 @@
 import { defineConfig } from 'astro/config';
 import process from 'node:process';
 
-// Configuración lista para despliegue en GitHub Pages (HugoAdama/WEDDING_WEB)
+// En GitHub Actions, GITHUB_REPOSITORY contiene el nombre exacto con mayúsculas/minúsculas (ej. HugoAdama/Wedding_Web)
+const repoName = process.env.GITHUB_REPOSITORY
+  ? process.env.GITHUB_REPOSITORY.split('/')[1]
+  : 'Wedding_Web';
+
 const site = process.env.SITE_URL || 'https://hugoadama.github.io';
-const base = process.env.BASE_PATH || (process.env.NODE_ENV === 'production' ? '/WEDDING_WEB/' : '/');
+const base = process.env.BASE_PATH || (process.env.NODE_ENV === 'production' ? `/${repoName}/` : '/');
 
 export default defineConfig({
   site,
