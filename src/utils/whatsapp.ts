@@ -8,7 +8,7 @@ export function formatearMensajeWhatsApp(datos: RsvpFormData): string {
 
   if (asistencia === 'si') {
     return [
-      'Hola Camila y Mateo, ¡confirmo con mucha alegría mi asistencia a su boda! ✨',
+      'Hola Camila y Mateo, ¡confirmo con mucha alegría mi asistencia a su boda!',
       '',
       `*Nombre:* ${nombre}`,
       `*Asistencia:* Sí, confirmo`,

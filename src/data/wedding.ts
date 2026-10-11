@@ -245,7 +245,7 @@ export const weddingData = {
       },
       {
         title: 'Traslado seguro en buses',
-        desc: 'Transporte privado Miraflores ↔ Cieneguilla con salidas de retorno programadas a las 11:30 p.m., 1:30 a.m. y 2:30 a.m.',
+        desc: 'Transporte privado Miraflores — Cieneguilla con salidas de retorno programadas a las 11:30 p.m., 1:30 a.m. y 2:30 a.m.',
       },
       {
         title: 'Estacionamiento y seguridad',

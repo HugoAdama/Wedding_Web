@@ -5,6 +5,9 @@ import ChurchIcon from '../icons/ChurchIcon.astro';
 import PartyGlassIcon from '../icons/PartyGlassIcon.astro';
 import MapPinIcon from '../icons/MapPinIcon.astro';
 import ClockIcon from '../icons/ClockIcon.astro';
+import CarIcon from '../icons/CarIcon.astro';
+import ParkingIcon from '../icons/ParkingIcon.astro';
+import TaxiIcon from '../icons/TaxiIcon.astro';
 ---
 <section class="seccion" id="ceremonia" aria-label="Ceremonia y Recepción">
   <div class="contenedor">
@@ -139,7 +142,9 @@ import ClockIcon from '../icons/ClockIcon.astro';
 
       <div class="ruta-tips__grid">
         <div class="ruta-tip-card">
-          <div class="ruta-tip-card__icon">🚗</div>
+          <div class="ruta-tip-card__icon">
+            <CarIcon size={22} />
+          </div>
           <div class="ruta-tip-card__info">
             <h5>Tiempo sugerido de viaje</h5>
             <p>Aprox. 45-60 min desde el este/sur de Lima. Te aconsejamos salir con 20 minutos de margen para disfrutar el trayecto sin apuros.</p>
@@ -147,7 +152,9 @@ import ClockIcon from '../icons/ClockIcon.astro';
         </div>
 
         <div class="ruta-tip-card">
-          <div class="ruta-tip-card__icon">🅿️</div>
+          <div class="ruta-tip-card__icon">
+            <ParkingIcon size={22} />
+          </div>
           <div class="ruta-tip-card__info">
             <h5>Estacionamiento privado</h5>
             <p>La hacienda cuenta con cochera privada gratuita y personal de vigilancia durante todo el evento para tu total tranquilidad.</p>
@@ -155,7 +162,9 @@ import ClockIcon from '../icons/ClockIcon.astro';
         </div>
 
         <div class="ruta-tip-card">
-          <div class="ruta-tip-card__icon">🚕</div>
+          <div class="ruta-tip-card__icon">
+            <TaxiIcon size={22} />
+          </div>
           <div class="ruta-tip-card__info">
             <h5>Servicios de taxi & retorno</h5>
             <p>Si prefieres no conducir, te recomendamos agendar tu viaje de retorno con anticipación o compartir movilidad con otros invitados.</p>
@@ -391,10 +400,15 @@ import ClockIcon from '../icons/ClockIcon.astro';
   }
 
   .ruta-tip-card__icon {
-    font-size: 1.6rem;
-    line-height: 1;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--arena-suave);
+    color: var(--oliva-oscuro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
-    margin-top: 0.1rem;
   }
 
   .ruta-tip-card__info h5 {
