@@ -183,3 +183,12 @@ Ubica tus fotos en `public/images/` asegurándote de usar formato **WebP**:
 ## 6. Generación o Reemplazo del PDF Plan B
 
 El archivo `public/plan-b-boda.pdf` puede ser reemplazado por tu propio PDF diseñado en Canva, Figma o Word. Solo renómbralo a `plan-b-boda.pdf` y colócalo dentro de la carpeta `public/`.
+
+---
+
+## 7. Personalización del Favicon (`public/favicon.svg`)
+
+El favicon vectorial utiliza un diseño de alianzas de boda entrelazadas con efecto tridimensional y un diamante solitario sobre un medallón circular aterciopelado. Para ajustar los colores o reflejos:
+
+- **Color de fondo del medallón**: Edita `<radialGradient id="discGrad">` en [public/favicon.svg](file:///e:/WEDDING_WEB/public/favicon.svg).
+- **Tono metálico de los anillos**: Ajusta las paradas de color en `<linearGradient id="goldRingGrad">` (champagne, oro amarillo o plata).

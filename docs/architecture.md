@@ -16,6 +16,7 @@ src/
 ├── utils/
 │   ├── audioSynth.ts          # Síntesis acústica en tiempo real con Web Audio API (cero dependencias)
 │   ├── clipboard.ts           # Copiado universal al portapapeles con microinteracciones y toast
+│   ├── path.ts                # Normalizador de rutas estáticas con base URL
 │   └── whatsapp.ts            # Formateador semántico de mensajes Markdown y generador de URL wa.me
 ├── components/
 │   ├── common/                # Componentes utilitarios y globales interactivos
@@ -24,9 +25,12 @@ src/
 │   │   ├── LightboxModal.astro # Modal accesible <dialog> para ampliación de fotografías
 │   │   ├── SectionHeader.astro # Encabezados de sección con motivos geométricos y florales
 │   │   └── ThemeSwitcher.astro # Panel interactivo flotante para cambio de paletas en vivo
-│   ├── icons/                 # Biblioteca propia de 17 iconos 100% vectoriales en SVG
+│   ├── icons/                 # Biblioteca propia de 20 iconos 100% vectoriales en SVG
 │   │   ├── OliveBranch.astro  # Motivo botánico de ramita de olivo
 │   │   ├── WhatsAppIcon.astro # Icono vectorial oficial de WhatsApp
+│   │   ├── CarIcon.astro      # Traslado en vehículo particular
+│   │   ├── ParkingIcon.astro  # Estacionamiento vigilado
+│   │   ├── TaxiIcon.astro     # Servicios de taxi y retorno
 │   │   ├── HeartIcon.astro    # Corazón estilizado
 │   │   └── ...                # Cero emojis en toda la aplicación
 │   └── sections/              # Componentes de bloque para cada sección de la página

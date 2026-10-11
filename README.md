@@ -2,6 +2,8 @@
 
 Sitio web estático para invitación de boda construido con **Astro 7**, arquitectura modular por componentes, datos centralizados y tipados, optimizado para alto rendimiento (Lighthouse 95+), accesibilidad y despliegue continuo en **GitHub Pages**.
 
+🌐 **Sitio Web en Vivo**: [https://hugoadama.github.io/Wedding_Web/](https://hugoadama.github.io/Wedding_Web/)
+
 > 📚 **Documentación Completa**: Consulta la carpeta [`docs/`](./docs/README.md) para guías detalladas de [Arquitectura](./docs/architecture.md), [Personalización](./docs/customization-guide.md), [Privacidad y RSVP](./docs/privacy-and-rsvp.md) y [Despliegue](./docs/deployment.md).
 
 ---
@@ -16,13 +18,13 @@ Sitio web estático para invitación de boda construido con **Astro 7**, arquite
 - **RSVP Modular sin Backend Pesado**: Formulario desacoplado en subcomponentes (`AttendanceSelector.astro`, `GuestStepper.astro`, `MenuSelector.astro`) que valida datos y genera dinámicamente el mensaje preformateado para abrir en **WhatsApp** (`whatsapp.ts`).
 - **Mesa de Regalos & Portapapeles Inteligente**: Soporte para cuentas bancarias (Soles y Dólares), código interbancario (CCI) y billeteras móviles, con botón de copia rápida al portapapeles y retroalimentación visual inmediata (`clipboard.ts`).
 - **Barra de Progreso y Revelado de Lectura**: Indicador superior dorado de avance de lectura y animaciones escalonadas con `IntersectionObserver`, respetando `prefers-reduced-motion` y con respaldo `<noscript>`.
-- **Sin Dependencias Innecesarias**: Sin D1, sin Serverless Functions, sin Turnstile, sin servicios de correo externos ni librerías pesadas en el cliente.
-- **Iconografía 100% SVG**: Cero emojis. 17 iconos vectoriales semánticos y botánicos diseñados en SVG accesible (`currentColor`).
+- **Cero Emojis · Iconografía 100% SVG**: Biblioteca propia de 20 iconos vectoriales semánticos y botánicos diseñados en SVG accesible (`currentColor`), incluyendo transporte, mapas, alianzas y detalles de logística.
+- **Favicon de Joyería en Oro Champagne**: Medallón circular con dos alianzas de boda entrelazadas con trazado 3D y diamante solitario en la cúspide.
 - **Fotografías WebP Optimizadas**: Galería y recuerdos procesados en formato WebP con dimensiones responsivas y carga diferida (`loading="lazy"`).
 - **Integración con Calendarios**: Enlace directo para agregar a **Google Calendar** y descarga de archivo estándar **iCalendar (.ics)** para Apple Calendar / Outlook.
 - **Plan B & Logística de Contingencia**: Sección con itinerario de emergencia y descarga de documento **Plan B en PDF**.
 - **Privacidad Respetada**: Etiqueta `<meta name="robots" content="noindex, nofollow">` y aviso legal claro; ningún dato se almacena en bases de datos o servidores externos.
-- **CI/CD Automatizado**: Workflow de **GitHub Actions** (`.github/workflows/deploy.yml`) para compilación y publicación automática en GitHub Pages.
+- **CI/CD Automatizado con Node 22**: Workflow de **GitHub Actions** (`.github/workflows/deploy.yml`) para compilación y publicación automática en GitHub Pages con soporte de subrutas deterministas (`path.ts`).
 
 ---
 
@@ -32,9 +34,9 @@ Sitio web estático para invitación de boda construido con **Astro 7**, arquite
 wedding-web/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml          # Pipeline de despliegue a GitHub Pages
+│       └── deploy.yml          # Pipeline de despliegue a GitHub Pages (Node 22)
 ├── public/
-│   ├── favicon.svg             # Favicon vectorial con monograma y olivo
+│   ├── favicon.svg             # Favicon vectorial con alianzas de oro entrelazadas
 │   ├── plan-b-boda.pdf         # Guía oficial del invitado y plan de contingencia
 │   └── images/                 # Fotografías WebP optimizadas
 ├── src/
@@ -45,13 +47,33 @@ wedding-web/
 │   │   │   ├── LightboxModal.astro   # Visor de pantalla completa para galería
 │   │   │   ├── SectionHeader.astro   # Encabezados con divisores botánicos
 │   │   │   └── ThemeSwitcher.astro   # Selector en vivo de paletas cromáticas
-│   │   ├── icons/              # Biblioteca propia de iconos SVG (17 iconos, cero emojis)
+│   │   ├── icons/              # Biblioteca propia de iconos SVG (20 iconos, cero emojis)
+│   │   │   ├── BedIcon.astro         # Alojamiento
+│   │   │   ├── BusIcon.astro         # Traslado en buses
+│   │   │   ├── CalendarIcon.astro    # Fechas y calendarios
+│   │   │   ├── CarIcon.astro         # Tiempo de viaje en auto particular
+│   │   │   ├── CheckIcon.astro       # Confirmaciones y checks
+│   │   │   ├── ChevronIcon.astro     # Navegación y desplegables
+│   │   │   ├── ChurchIcon.astro      # Ceremonia religiosa
+│   │   │   ├── ClockIcon.astro       # Horarios y cuenta regresiva
+│   │   │   ├── CopyIcon.astro        # Portapapeles
+│   │   │   ├── DownloadIcon.astro    # Descarga de PDF / ICS
+│   │   │   ├── GiftIcon.astro        # Mesa de regalos
+│   │   │   ├── HeartIcon.astro       # Romance y favoritos
+│   │   │   ├── MailIcon.astro        # Correo y contacto
+│   │   │   ├── MapPinIcon.astro      # Ubicación y mapas
+│   │   │   ├── OliveBranch.astro     # Ramas botánicas de olivo
+│   │   │   ├── ParkingIcon.astro     # Estacionamiento vigilado
+│   │   │   ├── PartyGlassIcon.astro  # Recepción y fiesta
+│   │   │   ├── ShieldCheckIcon.astro # Seguridad y privacidad
+│   │   │   ├── TaxiIcon.astro        # Taxis y servicios de retorno
+│   │   │   └── WhatsAppIcon.astro    # WhatsApp oficial
 │   │   └── sections/           # Secciones modulares de la página:
 │   │       ├── Header.astro          # Barra superior con menú responsive
 │   │       ├── Hero.astro            # Portada con foto en arco y cuenta regresiva
 │   │       ├── Countdown.astro       # Contador de días, horas y minutos
 │   │       ├── StoryTimeline.astro   # Línea de tiempo cronológica de la pareja
-│   │       ├── CeremonyReception.astro# Locaciones, mapa embebido y Waze
+│   │       ├── CeremonyReception.astro# Locaciones, mapa embebido, Waze y tips de ruta
 │   │       ├── ScheduleTimeline.astro# Cronograma horario del día
 │   │       ├── DressCode.astro       # Código de vestimenta y paleta sugerida
 │   │       ├── PhotoGallery.astro    # Galería editorial escalonada
@@ -82,9 +104,10 @@ wedding-web/
 │   └── utils/
 │       ├── audioSynth.ts       # Sintetizador acústico con Web Audio API
 │       ├── clipboard.ts        # Helper para copiar al portapapeles con feedback
+│       ├── path.ts             # Normalizador determinista de rutas con base URL
 │       └── whatsapp.ts         # Generador de mensaje formateado y URL wa.me
 ├── astro.config.mjs            # Configuración para GitHub Pages y modo estático
-├── package.json
+├── package.json                # Dependencias y motor Node >= 22.12.0
 └── tsconfig.json
 ```
 
@@ -93,6 +116,7 @@ wedding-web/
 ## 🛠️ Tecnologías Utilizadas
 
 - **Framework**: [Astro 7](https://astro.build/)
+- **Entorno de Ejecución**: Node.js `>=22.12.0` (LTS)
 - **Estilos**: Vanilla CSS con Custom Properties (Mobile First, Grid, Flexbox, `clamp()`, `aspect-ratio`)
 - **Lógica Interactiva**: Vanilla JavaScript y TypeScript (Sintetizador Web Audio, generador RSVP WhatsApp, descarga .ics, portapapeles, visor Lightbox)
 - **Audio Nativo**: Web Audio API (acordes de Re, Sol, Si menor y La Mayor sin archivos externos)
@@ -104,24 +128,25 @@ wedding-web/
 
 ## 🚀 Instalación y Desarrollo Local
 
-1. **Instalar dependencias**:
+1. **Requisitos**: Node.js versión `>=22.12.0`.
+2. **Instalar dependencias**:
    ```bash
    npm install
    ```
 
-2. **Iniciar servidor de desarrollo**:
+3. **Iniciar servidor de desarrollo**:
    ```bash
    npm run dev
    ```
    Abre [http://localhost:4321](http://localhost:4321) en tu navegador.
 
-3. **Compilar para producción**:
+4. **Compilar para producción**:
    ```bash
    npm run build
    ```
    El resultado estático se generará en la carpeta `./dist`.
 
-4. **Previsualizar la compilación de producción**:
+5. **Previsualizar la compilación de producción**:
    ```bash
    npm run preview
    ```
@@ -133,13 +158,14 @@ wedding-web/
 1. Sube este repositorio a GitHub en la rama `main`.
 2. En GitHub, ve a **Settings** → **Pages**.
 3. En **Build and deployment**, selecciona **Source: GitHub Actions**.
-4. Cada `git push` a `main` activará el workflow en `.github/workflows/deploy.yml` y publicará tu sitio automáticamente.
+4. Cada `git push` a `main` activará automáticamente el workflow en `.github/workflows/deploy.yml` y publicará tu sitio en:
+   **`https://hugoadama.github.io/Wedding_Web/`**
 
 ---
 
 ## 📋 Checklist Final del Proyecto
 
-- [x] Web 100% estática en Astro 7 lista para GitHub Pages.
+- [x] Web 100% estática en Astro 7 lista y desplegada en GitHub Pages.
 - [x] Sin D1, sin Functions, sin Turnstile, sin Resend.
 - [x] Contenido esencial completo, coherente y tipado en TypeScript.
 - [x] Selector interactivo de paletas en vivo (`ThemeSwitcher.astro`) con 4 temas.
@@ -155,7 +181,9 @@ wedding-web/
 - [x] `<meta name="robots" content="noindex, nofollow">` activo para privacidad.
 - [x] Documento Plan B en PDF generado y disponible para descarga directa.
 - [x] Imágenes WebP generadas y optimizadas.
-- [x] Iconografía 100% en SVG (17 iconos específicos, cero emojis).
+- [x] Iconografía 100% en SVG (20 iconos vectoriales específicos, cero emojis).
+- [x] Favicon con alianzas de boda entrelazadas en oro fino y diamante solitario.
+- [x] Compatibilidad verificada con Node.js 22 en CI/CD y resolución determinista de rutas con `getAssetPath`.
 - [x] HTML semántico sin etiquetas sin cerrar (cumple con la rigurosidad de Astro 7).
 - [x] Workflow de GitHub Actions configurado en `.github/workflows/deploy.yml`.
 

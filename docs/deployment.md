@@ -1,48 +1,51 @@
 # 🚀 Guía de Despliegue en GitHub Pages
 
-Este proyecto incluye integración continua (CI/CD) preconfigurada mediante GitHub Actions.
+Este proyecto incluye integración continua (CI/CD) preconfigurada mediante GitHub Actions y optimizada para **Astro 7**.
+
+🌐 **Despliegue de Producción Activo**: [https://hugoadama.github.io/Wedding_Web/](https://hugoadama.github.io/Wedding_Web/)
 
 ---
 
 ## 📋 Pasos para Desplegar
 
-### 1. Subir el repositorio a GitHub
-Crea un repositorio público o privado en tu cuenta de GitHub y sube tu código a la rama `main`:
+### 1. Repositorio en GitHub
+El proyecto se encuentra versionado y publicado en GitHub bajo la rama `main`:
 ```bash
-git init
-git add .
-git commit -m "feat: invitacion de boda lista en Astro 7"
-git branch -M main
-git remote add origin https://github.com/<tu-usuario>/<tu-repo>.git
+git remote add origin https://github.com/HugoAdama/Wedding_Web.git
 git push -u origin main
 ```
 
 ### 2. Configurar la fuente de GitHub Pages
-1. Entra a tu repositorio en GitHub.
+1. Entra a tu repositorio en GitHub ([HugoAdama/Wedding_Web](https://github.com/HugoAdama/Wedding_Web)).
 2. Ve a la pestaña **Settings** (Configuración) → **Pages**.
 3. En la sección **Build and deployment**:
    - **Source**: Selecciona `GitHub Actions`.
 
-### 3. Verificar el Workflow
-Al hacer push a `main`, GitHub Actions ejecutará automáticamente el archivo [.github/workflows/deploy.yml](file:///e:/WEDDING_WEB/.github/workflows/deploy.yml):
-- Instala Node 20.
-- Ejecuta `npm ci` y `npm run build`.
-- Sube el contenido de `./dist` como artefacto de GitHub Pages.
-- Despliega la web de forma segura.
+### 3. Workflow Automatizado (.github/workflows/deploy.yml)
+Al hacer push a `main`, GitHub Actions ejecuta automáticamente el pipeline:
+- Configura **Node.js 22** (versión requerida estrictamente por Astro 7).
+- Ejecuta `npm ci` para instalar dependencias deterministas.
+- Ejecuta `npm run build` para compilar el sitio estático en `./dist`.
+- Sube el artefacto a GitHub Pages y publica la web de forma segura.
 
 ---
 
-## 🌐 Configuración de Rutas (astro.config.mjs)
+## 🌐 Configuración de Rutas y Subcarpetas (astro.config.mjs)
 
-En [astro.config.mjs](file:///e:/WEDDING_WEB/astro.config.mjs):
+Debido a que GitHub Pages sirve los sitios de proyecto bajo una subruta con distinción de mayúsculas y minúsculas (`/Wedding_Web/`), [astro.config.mjs](file:///e:/WEDDING_WEB/astro.config.mjs) detecta dinámicamente el nombre del repositorio:
 
 ```javascript
 // @ts-check
 import { defineConfig } from 'astro/config';
 import process from 'node:process';
 
-const site = process.env.SITE_URL || 'https://boda.camilaymateo.pe';
-const base = process.env.BASE_PATH || '/';
+// En GitHub Actions, GITHUB_REPOSITORY contiene el nombre exacto (ej. HugoAdama/Wedding_Web)
+const repoName = process.env.GITHUB_REPOSITORY
+  ? process.env.GITHUB_REPOSITORY.split('/')[1]
+  : 'Wedding_Web';
+
+const site = process.env.SITE_URL || 'https://hugoadama.github.io';
+const base = process.env.BASE_PATH || (process.env.NODE_ENV === 'production' ? `/${repoName}/` : '/');
 
 export default defineConfig({
   site,
@@ -53,7 +56,11 @@ export default defineConfig({
 });
 ```
 
-- Si tu repositorio se despliega en una subcarpeta (por ejemplo: `https://<usuario>.github.io/<nombre-repo>/`), puedes establecer en los secrets o variables del workflow de GitHub:
-  - `BASE_PATH`: `/<nombre-repo>/`
-  - `SITE_URL`: `https://<usuario>.github.io`
-- Si utilizas un dominio personalizado o un repositorio con nombre `<usuario>.github.io`, los valores predeterminados funcionan directamente.
+### 💡 Normalización de Recursos con `getAssetPath` (`src/utils/path.ts`)
+Para evitar rutas rotas en imágenes, iconos, PDF y Open Graph, todas las URLs estáticas se normalizan mediante la función:
+```typescript
+import { getAssetPath } from '../utils/path';
+
+const iconUrl = getAssetPath('/favicon.svg'); // '/Wedding_Web/favicon.svg' en prod, '/favicon.svg' en local
+```
+Esto asegura que el proyecto funcione al 100% tanto en desarrollo local (`http://localhost:4321/`) como en el subdirectorio de GitHub Pages sin configuraciones manuales adicionales.
