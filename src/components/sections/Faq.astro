@@ -1,0 +1,84 @@
+---
+import { weddingData } from '../../data/wedding';
+import SectionHeader from '../common/SectionHeader.astro';
+import ChevronIcon from '../icons/ChevronIcon.astro';
+---
+<section class="seccion seccion--arena" id="faq" aria-label="Preguntas frecuentes sobre la boda">
+  <div class="contenedor contenedor--angosto">
+    <SectionHeader
+      title="Preguntas Frecuentes"
+      subtitle="Todo lo que necesitas saber para acompañarnos con tranquilidad."
+    />
+
+    <div class="faq-lista">
+      {weddingData.faq.map((item, index) => (
+        <details class="faq-item" data-anim="fade-up" data-anim-delay={String((index % 4) + 1)}>
+          <summary class="faq-pregunta">
+            <span>{item.question}</span>
+            <ChevronIcon size={20} class="faq-icono" />
+          </summary>
+          <div class="faq-respuesta">
+            <p>{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-lista {
+    border-top: 1px solid var(--arena);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--arena);
+    transition: background-color var(--transicion-base);
+  }
+
+  .faq-item[open] {
+    background-color: rgba(232, 220, 200, 0.2);
+  }
+
+  .faq-pregunta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 1.35rem 0.5rem;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--fuente-titulo);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--oliva-oscuro);
+    user-select: none;
+  }
+
+  .faq-pregunta::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icono {
+    color: var(--terracota-oscuro);
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+  }
+
+  .faq-item[open] .faq-icono {
+    transform: rotate(180deg) !important;
+  }
+
+  .faq-respuesta {
+    padding: 0 0.5rem 1.5rem;
+  }
+
+  .faq-respuesta p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #444;
+  }
+</style>

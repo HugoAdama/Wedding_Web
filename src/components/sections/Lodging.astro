@@ -1,0 +1,124 @@
+---
+import { weddingData } from '../../data/wedding';
+import SectionHeader from '../common/SectionHeader.astro';
+import BedIcon from '../icons/BedIcon.astro';
+---
+<section class="seccion seccion--arena" id="hospedaje" aria-label="Opciones de hospedaje">
+  <div class="contenedor contenedor--angosto">
+    <SectionHeader
+      title={weddingData.lodging.title}
+      subtitle={weddingData.lodging.subtitle}
+    />
+
+    <ul class="hoteles-lista" role="list">
+      {weddingData.lodging.hotels.map((hotel, index) => (
+        <li class="hotel-card" data-anim="fade-up" data-anim-delay={String((index % 3) + 1)}>
+          <div class="hotel-card__icono">
+            <BedIcon size={24} />
+          </div>
+
+          <div class="hotel-card__info">
+            <h3 class="hotel-card__nombre">{hotel.name}</h3>
+            <p class="hotel-card__distancia">{hotel.distance}</p>
+          </div>
+
+          <div class="hotel-card__precio-col">
+            <span class="hotel-card__precio">{hotel.pricePerNight}</span>
+            <span class="hotel-card__por-noche">por noche</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <div class="hospedaje-aviso">
+      <p>{weddingData.lodging.notice}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hoteles-lista {
+    background: #fff;
+    border-radius: var(--radio-md);
+    border: 1px solid rgba(184, 167, 140, 0.4);
+    box-shadow: var(--sombra-card);
+    overflow: hidden;
+  }
+
+  .hotel-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 1.5rem 1.75rem;
+    border-bottom: 1px solid var(--arena);
+    transition: background-color var(--transicion-base);
+  }
+
+  .hotel-card:last-child {
+    border-bottom: none;
+  }
+
+  .hotel-card:hover {
+    background-color: #faf7f2;
+  }
+
+  .hotel-card__icono {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radio-sm);
+    background: rgba(107, 122, 90, 0.1);
+    color: var(--oliva-oscuro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .hotel-card__info {
+    flex: 1 1 14rem;
+  }
+
+  .hotel-card__nombre {
+    font-size: 1.35rem;
+    color: var(--oliva-oscuro);
+    margin-bottom: 0.2rem;
+  }
+
+  .hotel-card__distancia {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  .hotel-card__precio-col {
+    text-align: right;
+  }
+
+  .hotel-card__precio {
+    display: block;
+    font-family: var(--fuente-titulo);
+    font-size: 1.65rem;
+    font-weight: 600;
+    color: var(--terracota-oscuro);
+    line-height: 1;
+  }
+
+  .hotel-card__por-noche {
+    font-size: 0.8rem;
+    color: #888;
+  }
+
+  .hospedaje-aviso {
+    margin-top: 1.75rem;
+    text-align: center;
+  }
+
+  .hospedaje-aviso p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--oliva);
+    font-style: italic;
+  }
+</style>

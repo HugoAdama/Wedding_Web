@@ -1,0 +1,175 @@
+---
+import { weddingData } from '../../data/wedding';
+import SectionHeader from '../common/SectionHeader.astro';
+import ChurchIcon from '../icons/ChurchIcon.astro';
+import BusIcon from '../icons/BusIcon.astro';
+import PartyGlassIcon from '../icons/PartyGlassIcon.astro';
+import ClockIcon from '../icons/ClockIcon.astro';
+
+// Asignador de icono semántico para cada evento del itinerario
+function getIconComponent(index: number) {
+  switch (index) {
+    case 0:
+      return ChurchIcon;
+    case 1:
+      return BusIcon;
+    case 2:
+      return PartyGlassIcon;
+    case 3:
+      return PartyGlassIcon;
+    case 4:
+      return PartyGlassIcon;
+    case 5:
+      return BusIcon;
+    default:
+      return ClockIcon;
+  }
+}
+---
+<section class="seccion seccion--arena" id="itinerario" aria-label="Itinerario del día de la boda">
+  <div class="contenedor contenedor--angosto">
+    <SectionHeader
+      title="Itinerario del día"
+      subtitle="Los momentos clave para que nos acompañes de principio a fin."
+    />
+
+    <div class="itinerario-caja" data-anim="fade-up">
+      <ul class="itinerario-lista" role="list">
+        {weddingData.schedule.map((item, idx) => {
+          const IconComp = getIconComponent(idx);
+          return (
+            <li class="itinerario-item" data-anim="fade-up" data-anim-delay={String((idx % 4) + 1)}>
+              <div class="itinerario-item__hora-col">
+                <span class="itinerario-item__hora">{item.time}</span>
+              </div>
+
+              <div class="itinerario-item__nodo">
+                <span class="itinerario-item__circulo">
+                  <IconComp size={16} />
+                </span>
+              </div>
+
+              <div class="itinerario-item__info">
+                <h3 class="itinerario-item__titulo">{item.title}</h3>
+                <p class="itinerario-item__detalle">{item.detail}</p>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .itinerario-caja {
+    background: #fff;
+    border-radius: var(--radio-md);
+    padding: clamp(1.5rem, 5vw, 2.5rem);
+    box-shadow: var(--sombra-card);
+    border: 1px solid rgba(184, 167, 140, 0.4);
+  }
+
+  .itinerario-lista {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Línea vertical */
+  .itinerario-lista::before {
+    content: "";
+    position: absolute;
+    top: 1rem;
+    bottom: 1rem;
+    left: 6.25rem;
+    width: 2px;
+    background: var(--arena);
+  }
+
+  .itinerario-item {
+    display: grid;
+    grid-template-columns: 5.5rem auto 1fr;
+    align-items: center;
+    gap: 1.25rem;
+    position: relative;
+  }
+
+  .itinerario-item__hora {
+    font-family: var(--fuente-titulo);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--terracota-oscuro);
+    white-space: nowrap;
+    text-align: right;
+    display: block;
+  }
+
+  .itinerario-item__nodo {
+    position: relative;
+    z-index: 2;
+  }
+
+  .itinerario-item__circulo {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--oliva-oscuro);
+    color: var(--crema);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #fff;
+    box-shadow: var(--sombra-suave);
+  }
+
+  .itinerario-item:nth-child(even) .itinerario-item__circulo {
+    background: var(--terracota);
+  }
+
+  .itinerario-item__titulo {
+    font-size: 1.2rem;
+    color: var(--carbon);
+    margin-bottom: 0.15rem;
+  }
+
+  .itinerario-item__detalle {
+    margin: 0;
+    font-size: 0.88rem;
+    color: #666;
+  }
+
+  @media (max-width: 520px) {
+    .itinerario-lista::before {
+      left: 1.15rem;
+    }
+
+    .itinerario-item {
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+    }
+
+    .itinerario-item__hora-col {
+      grid-column: 2;
+      order: 1;
+    }
+
+    .itinerario-item__nodo {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      align-self: start;
+      margin-top: 0.25rem;
+    }
+
+    .itinerario-item__info {
+      grid-column: 2;
+      order: 2;
+    }
+
+    .itinerario-item__hora {
+      text-align: left;
+      font-size: 1.1rem;
+    }
+  }
+</style>

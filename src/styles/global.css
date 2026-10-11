@@ -1,0 +1,430 @@
+@import "./variables.css";
+@import "./reset.css";
+
+/* Contenedores y Layout */
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+}
+
+.contenedor--angosto {
+  max-width: var(--ancho-angosto);
+}
+
+.contenedor--lectura {
+  max-width: var(--ancho-lectura);
+}
+
+/* Enlace accesible para saltar al contenido */
+.saltar {
+  position: absolute;
+  left: 1rem;
+  top: -6rem;
+  z-index: 1000;
+  padding: 0.75rem 1.25rem;
+  background: var(--carbon);
+  color: var(--crema);
+  font-weight: 500;
+  border-radius: var(--radio-sm);
+  transition: top 0.2s ease;
+}
+
+.saltar:focus {
+  top: 1rem;
+}
+
+/* Secciones y temas de fondo */
+.seccion {
+  padding-block: clamp(4.5rem, 9vw, 7.5rem);
+  position: relative;
+}
+
+.seccion--arena {
+  background-color: var(--arena);
+}
+
+.seccion--oliva {
+  background-color: var(--oliva-oscuro);
+  color: var(--crema);
+}
+
+.seccion--oliva h2,
+.seccion--oliva h3,
+.seccion--oliva h4 {
+  color: var(--crema);
+}
+
+/* Encabezados de sección */
+.seccion-header {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+}
+
+.seccion-header__adorno {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--dorado);
+}
+
+.seccion-header__linea {
+  height: 1px;
+  width: 2.5rem;
+  background-color: currentColor;
+  opacity: 0.5;
+}
+
+.seccion-header__titulo {
+  font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+  letter-spacing: -0.01em;
+}
+
+.seccion-header__bajada {
+  max-width: 36rem;
+  margin: 0.85rem auto 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--oliva);
+}
+
+.seccion--oliva .seccion-header__bajada {
+  color: var(--arena);
+}
+
+/* Botones con estilo artesanal y microinteracciones */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 2rem;
+  font-family: var(--fuente-cuerpo);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  text-align: center;
+  border-radius: var(--radio-full);
+  border: 2px solid var(--oliva-oscuro);
+  background-color: var(--oliva-oscuro);
+  color: var(--crema);
+  cursor: pointer;
+  transition: all var(--transicion-base);
+  box-shadow: var(--sombra-suave);
+}
+
+.boton:hover {
+  background-color: var(--terracota-oscuro);
+  border-color: var(--terracota-oscuro);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-card);
+}
+
+.boton:active {
+  transform: translateY(0);
+}
+
+.boton--secundario {
+  background-color: transparent;
+  color: var(--oliva-oscuro);
+  border-color: var(--oliva-oscuro);
+}
+
+.boton--secundario:hover {
+  background-color: var(--oliva-oscuro);
+  color: var(--crema);
+}
+
+.boton--dorado {
+  background-color: var(--dorado);
+  border-color: var(--dorado);
+  color: var(--carbon);
+  font-weight: 600;
+}
+
+.boton--dorado:hover {
+  background-color: #dfbf75;
+  border-color: #dfbf75;
+  color: var(--carbon);
+}
+
+.boton--blanco {
+  background-color: var(--crema);
+  border-color: var(--crema);
+  color: var(--oliva-oscuro);
+}
+
+.boton--blanco:hover {
+  background-color: #fff;
+  border-color: #fff;
+  color: var(--carbon);
+}
+
+.boton--chico {
+  padding: 0.6rem 1.25rem;
+  font-size: 0.85rem;
+}
+
+.boton--icono {
+  padding: 0.75rem;
+  border-radius: 50%;
+}
+
+.enlace-destacado {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  color: var(--terracota-oscuro);
+  text-underline-offset: 4px;
+  transition: color var(--transicion-base);
+}
+
+.enlace-destacado:hover {
+  color: var(--oliva-oscuro);
+  text-decoration: underline;
+}
+
+/* Modales accesibles en CSS puro + dialog */
+.dialog-overlay {
+  border: none;
+  border-radius: var(--radio-md);
+  padding: 0;
+  max-width: min(92vw, 560px);
+  background: var(--crema);
+  box-shadow: var(--sombra-elevada);
+}
+
+.dialog-overlay::backdrop {
+  background: rgba(46, 46, 46, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+.dialog-box {
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+.dialog-box h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.dialog-box p {
+  color: #444;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.dialog-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+/* Alertas de copiado feedback */
+.toast-notificacion {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  background: var(--oliva-oscuro);
+  color: var(--crema);
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radio-full);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: var(--sombra-elevada);
+  opacity: 0;
+  transform: translateY(1rem);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.toast-notificacion.activo {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   SISTEMA DE ANIMACIONES & MICROINTERACCIONES EDITORIALES DE BODA
+   ========================================================================== */
+
+/* Keyframes de animación */
+@keyframes aparecerSuave {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aparecerEscala {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes brisaOlivoIzq {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-3.5deg) translateY(-4px);
+  }
+  100% {
+    transform: rotate(2deg) translateY(2px);
+  }
+}
+
+@keyframes brisaOlivoDer {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(3.5deg) translateY(-4px);
+  }
+  100% {
+    transform: rotate(-2deg) translateY(2px);
+  }
+}
+
+@keyframes destelloDorado {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(201, 169, 97, 0.35);
+  }
+  50% {
+    box-shadow: 0 4px 28px rgba(201, 169, 97, 0.65), 0 0 14px rgba(251, 242, 213, 0.55);
+  }
+}
+
+@keyframes flotacionSuave {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Elementos animados por scroll (Scroll Reveal) */
+[data-anim] {
+  opacity: 0;
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+[data-anim="fade-up"] {
+  transform: translateY(32px);
+}
+
+[data-anim="fade-in"] {
+  transform: scale(0.97);
+}
+
+[data-anim="slide-left"] {
+  transform: translateX(-36px);
+}
+
+[data-anim="slide-right"] {
+  transform: translateX(36px);
+}
+
+[data-anim="scale-up"] {
+  transform: scale(0.93) translateY(16px);
+}
+
+/* Estado activo cuando entra al campo de visión */
+[data-anim].anim-activo {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+
+/* Retardos escalonados para listas y tarjetas múltiples */
+[data-anim-delay="1"] { transition-delay: 0.08s; }
+[data-anim-delay="2"] { transition-delay: 0.16s; }
+[data-anim-delay="3"] { transition-delay: 0.24s; }
+[data-anim-delay="4"] { transition-delay: 0.32s; }
+[data-anim-delay="5"] { transition-delay: 0.40s; }
+[data-anim-delay="6"] { transition-delay: 0.48s; }
+
+/* Microinteracciones dinámicas */
+.tarjeta-lugar,
+.hotel-card,
+.regalo-card,
+.itinerario-caja {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tarjeta-lugar:hover,
+.hotel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px -8px rgba(74, 87, 64, 0.16);
+}
+
+/* Soporte moderno para Timeline nativo en navegadores compatibles */
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    .seccion-header {
+      animation: aparecerSuave auto cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 40%;
+    }
+  }
+
+  .hero__olivo--izq {
+    animation: brisaOlivoIzq 7s ease-in-out infinite alternate;
+  }
+
+  .hero__olivo--der {
+    animation: brisaOlivoDer 8.5s ease-in-out infinite alternate;
+  }
+
+  .boton--dorado {
+    animation: destelloDorado 4.5s ease-in-out infinite;
+  }
+}
+
+/* Respeto estricto a preferencias de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .hero__olivo--izq,
+  .hero__olivo--der,
+  .boton--dorado {
+    animation: none !important;
+  }
+}
+
+/* Barra de progreso de lectura superior */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3.5px;
+  background: linear-gradient(90deg, var(--oliva), var(--dorado), var(--terracota));
+  z-index: 9999;
+  transition: width 0.1s cubic-bezier(0.1, 0.5, 0.5, 1);
+  box-shadow: 0 0 10px rgba(201, 169, 97, 0.6);
+  pointer-events: none;
+}
+

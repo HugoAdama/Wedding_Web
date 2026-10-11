@@ -1,0 +1,167 @@
+---
+import CheckIcon from '../../icons/CheckIcon.astro';
+---
+
+<div class="campo">
+  <label>
+    <span class="campo__label-texto">¿Nos acompañarás en nuestro gran día?</span>
+    <span class="campo__requerido" aria-hidden="true">*</span>
+  </label>
+  <div class="asistencia-selector">
+    <label class="asistencia-opcion">
+      <input type="radio" name="asistencia" value="si" checked />
+      <span class="asistencia-card asistencia-card--si">
+        <span class="asistencia-card__icono">
+          <CheckIcon size={18} />
+        </span>
+        <span class="asistencia-card__info">
+          <strong>¡Sí, asistiré con alegría!</strong>
+          <small>Estaré presente para celebrar con ustedes</small>
+        </span>
+      </span>
+    </label>
+
+    <label class="asistencia-opcion">
+      <input type="radio" name="asistencia" value="no" />
+      <span class="asistencia-card asistencia-card--no">
+        <span class="asistencia-card__icono">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </span>
+        <span class="asistencia-card__info">
+          <strong>Lamentablemente no podré</strong>
+          <small>Los acompañaré con el corazón</small>
+        </span>
+      </span>
+    </label>
+  </div>
+</div>
+
+<style>
+  .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .campo label {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--oliva-oscuro);
+    line-height: 1.4;
+  }
+
+  .campo__label-texto {
+    color: var(--oliva-oscuro);
+  }
+
+  .campo__requerido {
+    color: var(--terracota-oscuro);
+  }
+
+  .asistencia-selector {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 600px) {
+    .asistencia-selector {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .asistencia-opcion {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+  }
+
+  .asistencia-opcion input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .asistencia-card {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1.15rem 1.25rem;
+    border-radius: var(--radio-md);
+    border: 2px solid var(--arena);
+    background: #ffffff;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 100%;
+    min-height: 5.5rem;
+  }
+
+  .asistencia-card__icono {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--arena-suave);
+    color: #888;
+    transition: all 0.25s ease;
+  }
+
+  .asistencia-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .asistencia-card__info strong {
+    font-size: 0.96rem;
+    color: var(--carbon);
+    line-height: 1.25;
+  }
+
+  .asistencia-card__info small {
+    font-size: 0.8rem;
+    color: #777;
+    line-height: 1.35;
+  }
+
+  .asistencia-opcion:hover .asistencia-card {
+    border-color: var(--oliva-oscuro);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .asistencia-opcion input:checked + .asistencia-card--si {
+    border-color: var(--oliva);
+    background: #f7f9f4;
+    box-shadow: 0 6px 18px rgba(107, 122, 90, 0.16);
+  }
+
+  .asistencia-opcion input:checked + .asistencia-card--si .asistencia-card__icono {
+    background: var(--oliva);
+    color: #fff;
+  }
+
+  .asistencia-opcion input:checked + .asistencia-card--no {
+    border-color: var(--terracota);
+    background: #fdf8f6;
+    box-shadow: 0 6px 18px rgba(201, 123, 90, 0.14);
+  }
+
+  .asistencia-opcion input:checked + .asistencia-card--no .asistencia-card__icono {
+    background: var(--terracota);
+    color: #fff;
+  }
+
+  .asistencia-opcion input:focus-visible + .asistencia-card {
+    outline: 2px solid var(--dorado);
+    outline-offset: 2px;
+  }
+</style>

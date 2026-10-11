@@ -1,0 +1,560 @@
+---
+import { weddingData } from '../../data/wedding';
+import SectionHeader from '../common/SectionHeader.astro';
+import CopyIcon from '../icons/CopyIcon.astro';
+import MailIcon from '../icons/MailIcon.astro';
+import ShieldCheckIcon from '../icons/ShieldCheckIcon.astro';
+import MapPinIcon from '../icons/MapPinIcon.astro';
+---
+
+<section class="seccion" id="regalos" aria-label="Mesa de regalos y muestras de cariño">
+  <div class="contenedor regalos-contenedor">
+    <SectionHeader
+      title={weddingData.giftRegistry.title}
+    />
+
+    <blockquote class="regalos-cita" data-anim="fade-in">
+      <p>«{weddingData.giftRegistry.quote}»</p>
+    </blockquote>
+
+    <div class="regalos-layout">
+      <!-- Columna Principal: Transferencia bancaria -->
+      <article class="regalo-card regalo-card--destacado" data-anim="slide-left" data-anim-delay="1">
+        <div class="regalo-card__cabecera">
+          <div class="regalo-card__icono regalo-card__icono--dorado">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="5" width="20" height="14" rx="2" />
+              <line x1="2" y1="10" x2="22" y2="10" />
+            </svg>
+          </div>
+          <div class="regalo-card__cabecera-info">
+            <span class="regalo-card__etiqueta regalo-card__etiqueta--dorada">Banca Móvil / CCI</span>
+            <h3 class="regalo-card__titulo">Transferencia bancaria</h3>
+          </div>
+        </div>
+
+        <p class="regalo-card__subtitulo">
+          Si prefieres hacernos un presente de manera digital, ponemos a tu disposición nuestras cuentas:
+        </p>
+
+        <div class="cuentas-lista">
+          {weddingData.giftRegistry.bankAccounts.map((cuenta) => {
+            const isUsd = cuenta.accountType.includes('Dólares') || cuenta.accountType.includes('USD');
+            return (
+              <div class="cuenta-item">
+                <div class="cuenta-item__cabecera">
+                  <div>
+                    <h4 class="cuenta-item__banco">{cuenta.bank}</h4>
+                    <span class="cuenta-item__tipo">{cuenta.accountType}</span>
+                  </div>
+                  <span class={`cuenta-item__moneda-badge ${isUsd ? 'cuenta-item__moneda-badge--usd' : 'cuenta-item__moneda-badge--pen'}`}>
+                    {isUsd ? 'USD · Dólares' : 'PEN · Soles'}
+                  </span>
+                </div>
+                
+                <div class="cuenta-item__datos">
+                  <div class="cuenta-item__dato">
+                    <span class="cuenta-item__label">Número:</span>
+                    <code class="cuenta-item__codigo">{cuenta.accountNumber}</code>
+                    <button
+                      type="button"
+                      class="btn-copiar"
+                      data-clipboard={cuenta.accountNumber}
+                      aria-label={`Copiar número de cuenta de ${cuenta.bank}`}
+                    >
+                      <CopyIcon size={13} />
+                      <span class="btn-copiar__texto">Copiar</span>
+                    </button>
+                  </div>
+
+                  <div class="cuenta-item__dato">
+                    <span class="cuenta-item__label">CCI:</span>
+                    <code class="cuenta-item__codigo">{cuenta.cci}</code>
+                    <button
+                      type="button"
+                      class="btn-copiar"
+                      data-clipboard={cuenta.cci}
+                      aria-label={`Copiar CCI de ${cuenta.bank}`}
+                    >
+                      <CopyIcon size={13} />
+                      <span class="btn-copiar__texto">Copiar</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="cuenta-item__titular">
+                  <span class="cuenta-item__titular-label">Titular:</span> {cuenta.beneficiary}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div class="regalo-card__seguridad">
+          <ShieldCheckIcon size={16} />
+          <span>Cuentas mancomunadas directas a nombre de los novios.</span>
+        </div>
+      </article>
+
+      <!-- Columna Secundaria: Lluvia de sobres y Mesa de novios -->
+      <div class="regalos-columna-secundaria" data-anim="slide-right" data-anim-delay="2">
+        <!-- Tarjeta 1: Lluvia de sobres -->
+        <article class="regalo-card regalo-card--secundario">
+          <div>
+            <div class="regalo-card__cabecera">
+              <div class="regalo-card__icono">
+                <MailIcon size={24} />
+              </div>
+              <div class="regalo-card__cabecera-info">
+                <span class="regalo-card__etiqueta">En la recepción</span>
+                <h3 class="regalo-card__titulo">Lluvia de sobres</h3>
+              </div>
+            </div>
+
+            <p class="regalo-card__texto">
+              {weddingData.giftRegistry.envelopeNotice}
+            </p>
+          </div>
+
+          <div class="regalo-card__detalle-caja">
+            <div class="regalo-card__detalle-icono">
+              <MapPinIcon size={18} />
+            </div>
+            <p class="regalo-card__detalle-texto">
+              Habrá un buzón decorativo y sobres disponibles en la entrada del salón en la hacienda para depositar tus buenos deseos.
+            </p>
+          </div>
+        </article>
+
+        <!-- Tarjeta 2: Mesa de novios tienda -->
+        <article class="regalo-card regalo-card--secundario">
+          <div>
+            <div class="regalo-card__cabecera">
+              <div class="regalo-card__icono">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <path d="M16 10a4 4 0 0 1-8 0" />
+                </svg>
+              </div>
+              <div class="regalo-card__cabecera-info">
+                <span class="regalo-card__etiqueta">Tienda & Online</span>
+                <h3 class="regalo-card__titulo">Mesa de novios</h3>
+              </div>
+            </div>
+
+            <p class="regalo-card__texto">
+              Si deseas obsequiarnos un detalle para equipar nuestro hogar, puedes consultar nuestra lista en <strong>{weddingData.giftRegistry.storeRegistry.storeName}</strong>:
+            </p>
+
+            <div class="cuenta-item cuenta-item--tienda">
+              <div class="cuenta-item__dato cuenta-item__dato--tienda">
+                <span class="cuenta-item__label">Código:</span>
+                <code class="cuenta-item__codigo">{weddingData.giftRegistry.storeRegistry.code}</code>
+                <button
+                  type="button"
+                  class="btn-copiar"
+                  data-clipboard={weddingData.giftRegistry.storeRegistry.code}
+                  aria-label="Copiar código de mesa de novios"
+                >
+                  <CopyIcon size={13} />
+                  <span class="btn-copiar__texto">Copiar</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <a
+            href={weddingData.giftRegistry.storeRegistry.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-tienda"
+          >
+            <span>Ver mesa de regalos en Falabella</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feedback flotante de copiado -->
+<div id="toast-copiado" class="toast-notificacion" role="status" aria-live="polite">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+  <span>¡Copiado al portapapeles!</span>
+</div>
+
+<script>
+  import { copiarAlPortapapeles } from '../../utils/clipboard';
+
+  const btnsCopiar = document.querySelectorAll('.btn-copiar');
+  const toast = document.getElementById('toast-copiado');
+
+  btnsCopiar.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const textToCopy = btn.getAttribute('data-clipboard');
+      if (textToCopy) {
+        copiarAlPortapapeles(textToCopy, btn as HTMLElement, toast);
+      }
+    });
+  });
+</script>
+
+<style>
+  .regalos-contenedor {
+    max-width: 1040px;
+    margin-inline: auto;
+  }
+
+  .regalos-cita {
+    margin: 0 auto 3.25rem;
+    max-width: 44rem;
+    text-align: center;
+    border: none;
+    padding: 0;
+  }
+
+  .regalos-cita p {
+    font-family: var(--fuente-titulo);
+    font-style: italic;
+    font-size: clamp(1.2rem, 3.2vw, 1.55rem);
+    line-height: 1.55;
+    color: var(--oliva-oscuro);
+    margin: 0;
+  }
+
+  /* Grid equilibrado: Transferencia a la izquierda, Sobres + Falabella a la derecha */
+  .regalos-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  @media (min-width: 880px) {
+    .regalos-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 1.75rem;
+      align-items: stretch;
+    }
+  }
+
+  .regalos-columna-secundaria {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .regalo-card {
+    background: #ffffff;
+    border: 1px solid var(--arena);
+    border-radius: var(--radio-md);
+    padding: 1.85rem;
+    box-shadow: var(--sombra-suave);
+    display: flex;
+    flex-direction: column;
+    border-top: 3px solid var(--oliva);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .regalo-card:hover {
+    box-shadow: var(--sombra-card);
+  }
+
+  .regalo-card--destacado {
+    border-top-color: var(--dorado);
+    background: linear-gradient(180deg, #fffdfb 0%, #ffffff 100%);
+  }
+
+  .regalo-card--secundario {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .regalo-card__cabecera {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .regalo-card__cabecera-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .regalo-card__etiqueta {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--oliva-oscuro);
+    margin-bottom: 0.2rem;
+  }
+
+  .regalo-card__etiqueta--dorada {
+    color: var(--dorado-oscuro);
+  }
+
+  .regalo-card__icono {
+    width: 3.25rem;
+    height: 3.25rem;
+    flex-shrink: 0;
+    border-radius: var(--radio-sm);
+    background: rgba(107, 122, 90, 0.1);
+    color: var(--oliva-oscuro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .regalo-card__icono--dorado {
+    background: rgba(201, 169, 97, 0.15);
+    color: var(--dorado-oscuro);
+  }
+
+  .regalo-card__titulo {
+    font-size: 1.45rem;
+    line-height: 1.2;
+    color: var(--oliva-oscuro);
+    margin: 0;
+  }
+
+  .regalo-card__subtitulo {
+    font-size: 0.92rem;
+    color: #666;
+    line-height: 1.5;
+    margin: 0 0 1.25rem;
+  }
+
+  .regalo-card__texto {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.55;
+    margin: 0 0 1.25rem;
+  }
+
+  .regalo-card__detalle-caja {
+    background: var(--crema);
+    border: 1px solid var(--arena);
+    border-radius: var(--radio-sm);
+    padding: 0.9rem 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: auto;
+  }
+
+  .regalo-card__detalle-icono {
+    color: var(--oliva-oscuro);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .regalo-card__detalle-texto {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .regalo-card__seguridad {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--arena);
+    font-size: 0.8rem;
+    color: #777;
+  }
+
+  .cuentas-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .cuenta-item {
+    background: var(--crema);
+    border-radius: var(--radio-sm);
+    padding: 1.15rem;
+    border: 1px solid var(--arena);
+    transition: border-color 0.2s ease;
+  }
+
+  .cuenta-item:hover {
+    border-color: #d1c0a7;
+  }
+
+  .cuenta-item--tienda {
+    margin-bottom: 1.25rem;
+    padding: 0.85rem 1rem;
+  }
+
+  .cuenta-item__cabecera {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .cuenta-item__banco {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--carbon);
+  }
+
+  .cuenta-item__tipo {
+    font-weight: 400;
+    font-size: 0.84rem;
+    color: #666;
+  }
+
+  .cuenta-item__moneda-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radio-full);
+    white-space: nowrap;
+  }
+
+  .cuenta-item__moneda-badge--pen {
+    background: rgba(107, 122, 90, 0.12);
+    color: var(--oliva-oscuro);
+    border: 1px solid rgba(107, 122, 90, 0.25);
+  }
+
+  .cuenta-item__moneda-badge--usd {
+    background: rgba(201, 169, 97, 0.18);
+    color: var(--dorado-oscuro);
+    border: 1px solid rgba(201, 169, 97, 0.35);
+  }
+
+  .cuenta-item__datos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .cuenta-item__dato {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    font-size: 0.88rem;
+  }
+
+  .cuenta-item__dato--tienda {
+    flex-wrap: nowrap;
+  }
+
+  .cuenta-item__label {
+    font-weight: 600;
+    color: var(--oliva-oscuro);
+    min-width: 4.25rem;
+    font-size: 0.85rem;
+  }
+
+  .cuenta-item__codigo {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.88rem;
+    background: #ffffff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #dcd3c4;
+    color: var(--carbon);
+    letter-spacing: 0.02em;
+    word-break: break-all;
+  }
+
+  .cuenta-item__titular {
+    margin: 0.65rem 0 0;
+    padding-top: 0.55rem;
+    border-top: 1px dashed rgba(184, 167, 140, 0.4);
+    font-size: 0.82rem;
+    color: #666;
+  }
+
+  .cuenta-item__titular-label {
+    font-weight: 600;
+    color: var(--oliva-oscuro);
+  }
+
+  .btn-copiar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.76rem;
+    font-weight: 600;
+    background: #ffffff;
+    border: 1px solid #c9bda9;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--oliva-oscuro);
+    transition: all 0.2s ease;
+    user-select: none;
+    margin-left: auto;
+  }
+
+  .btn-copiar:hover {
+    background: var(--oliva-oscuro);
+    color: #ffffff;
+    border-color: var(--oliva-oscuro);
+  }
+
+  .btn-copiar:active {
+    transform: scale(0.96);
+  }
+
+  .btn-copiar--copiado {
+    background: #3c6e47 !important;
+    color: #ffffff !important;
+    border-color: #3c6e47 !important;
+  }
+
+  .btn-tienda {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--oliva-oscuro);
+    background: var(--crema);
+    border: 1px solid var(--arena);
+    border-radius: var(--radio-sm);
+    text-decoration: none;
+    transition: all 0.25s ease;
+    margin-top: auto;
+  }
+
+  .btn-tienda:hover {
+    background: var(--oliva-oscuro);
+    color: #ffffff;
+    border-color: var(--oliva-oscuro);
+    box-shadow: 0 4px 12px rgba(74, 87, 64, 0.2);
+  }
+
+  .btn-tienda svg {
+    transition: transform 0.2s ease;
+  }
+
+  .btn-tienda:hover svg {
+    transform: translate(2px, -2px);
+  }
+</style>

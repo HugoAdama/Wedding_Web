@@ -1,0 +1,225 @@
+---
+import { weddingData } from '../../data/wedding';
+import CheckIcon from '../icons/CheckIcon.astro';
+---
+<header class="cabecera" id="cabecera-principal">
+  <div class="contenedor cabecera__fila">
+    <a class="cabecera__logo" href="#inicio" aria-label="Ir al inicio de la invitación">
+      <span class="cabecera__inicial">{weddingData.couple.bride.charAt(0)}</span>
+      <span class="cabecera__amp">&amp;</span>
+      <span class="cabecera__inicial">{weddingData.couple.groom.charAt(0)}</span>
+    </a>
+
+    <nav class="menu" id="menu-navegacion" aria-label="Navegación principal">
+      <ul class="menu__lista">
+        <li><a href="#historia" class="menu__enlace">Historia</a></li>
+        <li><a href="#ceremonia" class="menu__enlace">Ceremonia</a></li>
+        <li><a href="#itinerario" class="menu__enlace">Itinerario</a></li>
+        <li><a href="#vestimenta" class="menu__enlace">Vestimenta</a></li>
+        <li><a href="#galeria" class="menu__enlace">Galería</a></li>
+        <li><a href="#hospedaje" class="menu__enlace">Hospedaje</a></li>
+        <li><a href="#faq" class="menu__enlace">Preguntas</a></li>
+        <li><a href="#regalos" class="menu__enlace">Regalos</a></li>
+      </ul>
+    </nav>
+
+    <div class="cabecera__acciones">
+      <a class="boton boton--chico cabecera__btn-rsvp" href="#rsvp">
+        <CheckIcon size={16} />
+        <span>Confirmar asistencia</span>
+      </a>
+
+      <!-- Botón móvil para alternar menú -->
+      <button
+        type="button"
+        class="cabecera__toggle"
+        id="btn-menu-toggle"
+        aria-expanded="false"
+        aria-controls="menu-navegacion"
+        aria-label="Abrir menú de navegación"
+      >
+        <span class="cabecera__barra"></span>
+        <span class="cabecera__barra"></span>
+        <span class="cabecera__barra"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggleBtn = document.getElementById('btn-menu-toggle');
+  const navMenu = document.getElementById('menu-navegacion');
+  const links = document.querySelectorAll('.menu__enlace');
+
+  if (toggleBtn && navMenu) {
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+      navMenu.classList.toggle('menu--abierto');
+    });
+
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        navMenu.classList.remove('menu--abierto');
+      });
+    });
+  }
+</script>
+
+<style>
+  .cabecera {
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    height: var(--alto-cabecera);
+    background: rgba(245, 239, 230, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--arena);
+    transition: box-shadow var(--transicion-base);
+  }
+
+  .cabecera__fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    gap: 1rem;
+  }
+
+  .cabecera__logo {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.15rem;
+    font-family: var(--fuente-script);
+    font-size: 2.1rem;
+    color: var(--oliva-oscuro);
+    line-height: 1;
+    text-decoration: none;
+    transition: transform var(--transicion-base);
+  }
+
+  .cabecera__logo:hover {
+    transform: scale(1.04);
+  }
+
+  .cabecera__amp {
+    font-size: 1.6rem;
+    color: var(--terracota);
+  }
+
+  .menu {
+    display: none;
+  }
+
+  .menu__lista {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .menu__enlace {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--carbon);
+    padding: 0.25rem 0;
+    position: relative;
+    transition: color var(--transicion-base);
+  }
+
+  .menu__enlace::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--terracota);
+    transition: width var(--transicion-base);
+  }
+
+  .menu__enlace:hover {
+    color: var(--terracota-oscuro);
+  }
+
+  .menu__enlace:hover::after {
+    width: 100%;
+  }
+
+  .cabecera__acciones {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .cabecera__toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: transparent;
+    border: 1px solid var(--arena);
+    border-radius: var(--radio-sm);
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+
+  .cabecera__barra {
+    width: 100%;
+    height: 2px;
+    background-color: var(--oliva-oscuro);
+    border-radius: 2px;
+    transition: all var(--transicion-base);
+  }
+
+  @media (min-width: 960px) {
+    .menu {
+      display: block;
+    }
+    .cabecera__toggle {
+      display: none;
+    }
+  }
+
+  @media (max-width: 959px) {
+    .menu--abierto {
+      display: block;
+      position: absolute;
+      top: var(--alto-cabecera);
+      left: 0;
+      right: 0;
+      background: var(--crema);
+      border-bottom: 2px solid var(--arena);
+      box-shadow: var(--sombra-elevada);
+      padding: 1.5rem;
+    }
+
+    .menu--abierto .menu__lista {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+
+    .menu--abierto .menu__enlace {
+      font-size: 1.1rem;
+    }
+
+    .cabecera__btn-rsvp span {
+      display: none;
+    }
+    .cabecera__btn-rsvp {
+      padding: 0.6rem 0.8rem;
+    }
+  }
+
+  @media (min-width: 500px) {
+    .cabecera__btn-rsvp span {
+      display: inline;
+    }
+    .cabecera__btn-rsvp {
+      padding: 0.6rem 1.25rem;
+    }
+  }
+</style>

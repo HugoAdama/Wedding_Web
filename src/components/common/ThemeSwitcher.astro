@@ -1,0 +1,311 @@
+---
+// Selector interactivo de paletas de color para demostración de portafolio
+---
+
+<div class="theme-switcher" id="theme-switcher">
+  <button
+    type="button"
+    class="theme-switcher__btn"
+    id="btn-theme-toggle"
+    aria-label="Personalizar paleta de colores de la boda"
+    title="Personalizar paleta de colores (Demo)"
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
+      <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
+      <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
+      <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
+      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.563-2.512 5.563-5.563C22 6.5 17.5 2 12 2Z"></path>
+    </svg>
+    <span class="theme-switcher__btn-texto">Temas Demo</span>
+  </button>
+
+  <div class="theme-panel" id="theme-panel">
+    <div class="theme-panel__header">
+      <span class="theme-panel__badge">Demo Hugo Adama</span>
+      <h3 class="theme-panel__titulo">Personaliza la Paleta</h3>
+      <p class="theme-panel__subtitulo">Prueba cómo se adapta el diseño a distintos estilos de boda en tiempo real:</p>
+      <button type="button" class="theme-panel__close" id="btn-theme-close" aria-label="Cerrar selector de temas">✕</button>
+    </div>
+
+    <div class="theme-panel__opciones">
+      <!-- Opción 1: Oliva & Oro (Original) -->
+      <button type="button" class="theme-opcion theme-opcion--activo" data-theme="oliva">
+        <div class="theme-opcion__swatches">
+          <span style="background: #4A5740;"></span>
+          <span style="background: #C9A961;"></span>
+          <span style="background: #E8DCC8;"></span>
+        </div>
+        <div class="theme-opcion__info">
+          <strong>Oliva &amp; Oro</strong>
+          <small>Campestre &amp; Clásico</small>
+        </div>
+      </button>
+
+      <!-- Opción 2: Rosa Polvo & Oro Rosa -->
+      <button type="button" class="theme-opcion" data-theme="rosa">
+        <div class="theme-opcion__swatches">
+          <span style="background: #6B404E;"></span>
+          <span style="background: #D99B8B;"></span>
+          <span style="background: #F2DDD8;"></span>
+        </div>
+        <div class="theme-opcion__info">
+          <strong>Rosa Polvo</strong>
+          <small>Romántico Floral</small>
+        </div>
+      </button>
+
+      <!-- Opción 3: Azul Medianoche & Plata -->
+      <button type="button" class="theme-opcion" data-theme="azul">
+        <div class="theme-opcion__swatches">
+          <span style="background: #2B3D52;"></span>
+          <span style="background: #8FAEC9;"></span>
+          <span style="background: #DCE5ED;"></span>
+        </div>
+        <div class="theme-opcion__info">
+          <strong>Azul Noche</strong>
+          <small>Elegancia Sobria</small>
+        </div>
+      </button>
+
+      <!-- Opción 4: Terracota & Salvia -->
+      <button type="button" class="theme-opcion" data-theme="terracota">
+        <div class="theme-opcion__swatches">
+          <span style="background: #3B4D3C;"></span>
+          <span style="background: #C97B5A;"></span>
+          <span style="background: #EBDDCE;"></span>
+        </div>
+        <div class="theme-opcion__info">
+          <strong>Terracota</strong>
+          <small>Boho &amp; Cálido</small>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { weddingThemes } from '../../data/themes';
+
+  const btnToggle = document.getElementById('btn-theme-toggle');
+  const btnClose = document.getElementById('btn-theme-close');
+  const panel = document.getElementById('theme-panel');
+  const opciones = document.querySelectorAll('.theme-opcion');
+
+  const aplicarTema = (nombre: string) => {
+    const tema = weddingThemes[nombre];
+    if (!tema) return;
+
+    const root = document.documentElement;
+    Object.entries(tema.variables).forEach(([prop, val]) => {
+      root.style.setProperty(prop, val);
+    });
+
+    opciones.forEach((btn) => {
+      if (btn.getAttribute('data-theme') === nombre) {
+        btn.classList.add('theme-opcion--activo');
+      } else {
+        btn.classList.remove('theme-opcion--activo');
+      }
+    });
+
+    localStorage.setItem('boda_tema_elegido', nombre);
+  };
+
+
+  btnToggle?.addEventListener('click', () => {
+    panel?.classList.toggle('theme-panel--abierto');
+  });
+
+  btnClose?.addEventListener('click', () => {
+    panel?.classList.remove('theme-panel--abierto');
+  });
+
+  opciones.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const tema = btn.getAttribute('data-theme');
+      if (tema) aplicarTema(tema);
+    });
+  });
+
+  // Restaurar tema guardado
+  const temaPrevio = localStorage.getItem('boda_tema_elegido');
+  if (temaPrevio && weddingThemes[temaPrevio]) {
+    aplicarTema(temaPrevio);
+  }
+</script>
+
+<style>
+  .theme-switcher {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 85;
+  }
+
+  .theme-switcher__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: rgba(46, 56, 39, 0.94);
+    color: var(--crema);
+    border: 1.5px solid var(--dorado);
+    border-radius: var(--radio-full);
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    font-size: 0.84rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+  }
+
+  .theme-switcher__btn:hover {
+    transform: translateY(-2px);
+    background: rgba(35, 44, 29, 0.98);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4), 0 0 14px rgba(201, 169, 97, 0.4);
+  }
+
+  .theme-panel {
+    display: none;
+    position: absolute;
+    bottom: 3.5rem;
+    right: 0;
+    width: 18rem;
+    background: #ffffff;
+    color: var(--carbon);
+    border: 1.5px solid var(--arena);
+    border-radius: var(--radio-md);
+    box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.4);
+    padding: 1.25rem;
+    animation: aparecerPanel 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .theme-panel--abierto {
+    display: block;
+  }
+
+  @keyframes aparecerPanel {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .theme-panel__header {
+    position: relative;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--arena);
+  }
+
+  .theme-panel__badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dorado-oscuro);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .theme-panel__titulo {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--carbon);
+    margin: 0 0 0.25rem;
+  }
+
+  .theme-panel__subtitulo {
+    font-size: 0.78rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .theme-panel__close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    color: #888;
+    cursor: pointer;
+    padding: 0.2rem;
+  }
+
+  .theme-panel__opciones {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .theme-opcion {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    background: var(--crema);
+    border: 1.5px solid var(--arena);
+    border-radius: var(--radio-sm);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+  }
+
+  .theme-opcion:hover {
+    border-color: var(--oliva-oscuro);
+    background: #fff;
+  }
+
+  .theme-opcion--activo {
+    border-color: var(--dorado-oscuro);
+    background: #fffdf9;
+    box-shadow: 0 0 0 2px rgba(201, 169, 97, 0.35);
+  }
+
+  .theme-opcion__swatches {
+    display: flex;
+    gap: 3px;
+  }
+
+  .theme-opcion__swatches span {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+  }
+
+  .theme-opcion__info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .theme-opcion__info strong {
+    font-size: 0.85rem;
+    color: var(--carbon);
+  }
+
+  .theme-opcion__info small {
+    font-size: 0.72rem;
+    color: #777;
+  }
+
+  @media (max-width: 600px) {
+    .theme-switcher {
+      bottom: 1rem;
+      right: 1rem;
+    }
+    .theme-panel {
+      right: -0.5rem;
+      width: calc(100vw - 2rem);
+      max-width: 18rem;
+    }
+  }
+</style>

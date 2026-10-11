@@ -1,0 +1,413 @@
+---
+import { weddingData } from '../../data/wedding';
+import SectionHeader from '../common/SectionHeader.astro';
+import ChurchIcon from '../icons/ChurchIcon.astro';
+import PartyGlassIcon from '../icons/PartyGlassIcon.astro';
+import MapPinIcon from '../icons/MapPinIcon.astro';
+import ClockIcon from '../icons/ClockIcon.astro';
+---
+<section class="seccion" id="ceremonia" aria-label="Ceremonia y Recepción">
+  <div class="contenedor">
+    <SectionHeader
+      title="Ceremonia y Recepción"
+      subtitle="Los dos momentos más especiales de nuestra celebración."
+    />
+
+    <div class="lugares-grid">
+      <!-- Ceremonia Religiosa -->
+      <article class="tarjeta-lugar" data-anim="slide-left" data-anim-delay="1">
+        <header class="tarjeta-lugar__header">
+          <div class="tarjeta-lugar__icono-box">
+            <ChurchIcon size={28} />
+          </div>
+          <div>
+            <span class="tarjeta-lugar__etiqueta">Paso 1</span>
+            <h3 class="tarjeta-lugar__titulo">{weddingData.ceremony.title}</h3>
+          </div>
+        </header>
+
+        <div class="tarjeta-lugar__info">
+          <div class="tarjeta-lugar__fila">
+            <ClockIcon size={18} class="tarjeta-lugar__subicono" />
+            <p class="tarjeta-lugar__hora">{weddingData.ceremony.time}</p>
+          </div>
+          <div class="tarjeta-lugar__fila">
+            <MapPinIcon size={18} class="tarjeta-lugar__subicono" />
+            <div>
+              <p class="tarjeta-lugar__nombre">{weddingData.ceremony.venue}</p>
+              <p class="tarjeta-lugar__direccion">{weddingData.ceremony.address}</p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="tarjeta-lugar__acciones">
+          <a
+            class="boton boton--secundario boton--chico"
+            href={weddingData.ceremony.googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <MapPinIcon size={16} />
+            <span>Ver en Google Maps</span>
+          </a>
+          {weddingData.ceremony.wazeUrl && (
+            <a
+              class="boton boton--secundario boton--chico"
+              href={weddingData.ceremony.wazeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Abrir en Waze</span>
+            </a>
+          )}
+        </footer>
+      </article>
+
+      <!-- Recepción y Fiesta -->
+      <article class="tarjeta-lugar tarjeta-lugar--destacado" data-anim="slide-right" data-anim-delay="2">
+        <header class="tarjeta-lugar__header">
+          <div class="tarjeta-lugar__icono-box tarjeta-lugar__icono-box--destacado">
+            <PartyGlassIcon size={28} />
+          </div>
+          <div>
+            <span class="tarjeta-lugar__etiqueta tarjeta-lugar__etiqueta--destacada">Paso 2</span>
+            <h3 class="tarjeta-lugar__titulo">{weddingData.reception.title}</h3>
+          </div>
+        </header>
+
+        <div class="tarjeta-lugar__info">
+          <div class="tarjeta-lugar__fila">
+            <ClockIcon size={18} class="tarjeta-lugar__subicono" />
+            <p class="tarjeta-lugar__hora">{weddingData.reception.time}</p>
+          </div>
+          <div class="tarjeta-lugar__fila">
+            <MapPinIcon size={18} class="tarjeta-lugar__subicono" />
+            <div>
+              <p class="tarjeta-lugar__nombre">{weddingData.reception.venue}</p>
+              <p class="tarjeta-lugar__direccion">{weddingData.reception.address}</p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="tarjeta-lugar__acciones">
+          <a
+            class="boton boton--dorado boton--chico"
+            href={weddingData.reception.googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <MapPinIcon size={16} />
+            <span>Ver en Google Maps</span>
+          </a>
+          {weddingData.reception.wazeUrl && (
+            <a
+              class="boton boton--secundario boton--chico"
+              href={weddingData.reception.wazeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Abrir en Waze</span>
+            </a>
+          )}
+        </footer>
+      </article>
+    </div>
+
+    <!-- Mapa embebido con marco estético -->
+    <div class="mapa-wrapper" data-anim="fade-in">
+      <div class="mapa-header">
+        <MapPinIcon size={20} class="mapa-header__icono" />
+        <h4 class="mapa-header__titulo">Ubicación de la recepción · Cieneguilla</h4>
+      </div>
+      <div class="mapa-marco">
+        <iframe
+          title="Mapa de la Hacienda Los Olivos en Cieneguilla, Lima"
+          src={weddingData.reception.embedMapUrl}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Consejos y Logística de Ruta Cieneguilla -->
+    <div class="ruta-tips" data-anim="fade-in">
+      <div class="ruta-tips__header">
+        <span class="ruta-tips__tag">Guía de Llegada</span>
+        <h4 class="ruta-tips__titulo">Consejos para tu traslado a Cieneguilla</h4>
+      </div>
+
+      <div class="ruta-tips__grid">
+        <div class="ruta-tip-card">
+          <div class="ruta-tip-card__icon">🚗</div>
+          <div class="ruta-tip-card__info">
+            <h5>Tiempo sugerido de viaje</h5>
+            <p>Aprox. 45-60 min desde el este/sur de Lima. Te aconsejamos salir con 20 minutos de margen para disfrutar el trayecto sin apuros.</p>
+          </div>
+        </div>
+
+        <div class="ruta-tip-card">
+          <div class="ruta-tip-card__icon">🅿️</div>
+          <div class="ruta-tip-card__info">
+            <h5>Estacionamiento privado</h5>
+            <p>La hacienda cuenta con cochera privada gratuita y personal de vigilancia durante todo el evento para tu total tranquilidad.</p>
+          </div>
+        </div>
+
+        <div class="ruta-tip-card">
+          <div class="ruta-tip-card__icon">🚕</div>
+          <div class="ruta-tip-card__info">
+            <h5>Servicios de taxi & retorno</h5>
+            <p>Si prefieres no conducir, te recomendamos agendar tu viaje de retorno con anticipación o compartir movilidad con otros invitados.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lugares-grid {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .lugares-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .tarjeta-lugar {
+    background: #fdfbf8;
+    border: 1px solid var(--arena);
+    border-top: 4px solid var(--oliva);
+    border-radius: var(--radio-md);
+    padding: clamp(1.75rem, 4vw, 2.25rem);
+    box-shadow: var(--sombra-suave);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform var(--transicion-base), box-shadow var(--transicion-base);
+  }
+
+  .tarjeta-lugar:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-card);
+  }
+
+  .tarjeta-lugar--destacado {
+    border-top-color: var(--terracota);
+    background: #fffdf9;
+  }
+
+  .tarjeta-lugar__header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tarjeta-lugar__icono-box {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: var(--radio-sm);
+    background: rgba(107, 122, 90, 0.12);
+    color: var(--oliva-oscuro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .tarjeta-lugar__icono-box--destacado {
+    background: rgba(201, 123, 90, 0.12);
+    color: var(--terracota-oscuro);
+  }
+
+  .tarjeta-lugar__etiqueta {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--oliva);
+  }
+
+  .tarjeta-lugar__etiqueta--destacada {
+    color: var(--terracota-oscuro);
+  }
+
+  .tarjeta-lugar__titulo {
+    font-size: 1.75rem;
+    color: var(--carbon);
+  }
+
+  .tarjeta-lugar__info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .tarjeta-lugar__fila {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .tarjeta-lugar__subicono {
+    color: var(--terracota);
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+  }
+
+  .tarjeta-lugar__hora {
+    margin: 0;
+    font-family: var(--fuente-titulo);
+    font-size: 2.1rem;
+    font-weight: 600;
+    color: var(--terracota-oscuro);
+    line-height: 1;
+  }
+
+  .tarjeta-lugar__nombre {
+    margin: 0 0 0.15rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--oliva-oscuro);
+  }
+
+  .tarjeta-lugar__direccion {
+    margin: 0;
+    color: #555;
+    font-size: 0.95rem;
+  }
+
+  .tarjeta-lugar__acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px dashed var(--arena);
+  }
+
+  /* Mapa */
+  .mapa-wrapper {
+    background: #fff;
+    border: 1px solid var(--arena);
+    border-radius: var(--radio-md);
+    overflow: hidden;
+    box-shadow: var(--sombra-card);
+  }
+
+  .mapa-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 1.5rem;
+    background: var(--arena-suave);
+    border-bottom: 1px solid var(--arena);
+  }
+
+  .mapa-header__icono {
+    color: var(--terracota-oscuro);
+  }
+
+  .mapa-header__titulo {
+    font-size: 1.15rem;
+    color: var(--oliva-oscuro);
+  }
+
+  .mapa-marco {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    min-height: 320px;
+  }
+
+  .mapa-marco iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* Consejos de ruta */
+  .ruta-tips {
+    margin-top: 2.5rem;
+    background: #fdfbf7;
+    border: 1px solid var(--arena);
+    border-radius: var(--radio-md);
+    padding: clamp(1.5rem, 3.5vw, 2.25rem);
+    box-shadow: var(--sombra-suave);
+  }
+
+  .ruta-tips__header {
+    text-align: center;
+    margin-bottom: 1.75rem;
+  }
+
+  .ruta-tips__tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--oliva);
+    margin-bottom: 0.35rem;
+  }
+
+  .ruta-tips__titulo {
+    font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+    color: var(--carbon);
+    margin: 0;
+  }
+
+  .ruta-tips__grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .ruta-tips__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .ruta-tip-card {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: #ffffff;
+    border: 1px solid var(--arena-suave);
+    border-radius: var(--radio-sm);
+    padding: 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .ruta-tip-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-card);
+  }
+
+  .ruta-tip-card__icon {
+    font-size: 1.6rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .ruta-tip-card__info h5 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--oliva-oscuro);
+    margin: 0 0 0.35rem;
+  }
+
+  .ruta-tip-card__info p {
+    font-size: 0.84rem;
+    color: #666;
+    line-height: 1.45;
+    margin: 0;
+  }
+</style>

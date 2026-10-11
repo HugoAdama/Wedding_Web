@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  centered?: boolean;
+  light?: boolean;
+}
+
+const { title, subtitle, centered = true, light = false } = Astro.props;
+---
+<div class:list={['seccion-header', { 'text-left': !centered }]} data-anim="fade-up">
+  <div class="seccion-header__adorno">
+    <span class="seccion-header__linea"></span>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" />
+    </svg>
+    <span class="seccion-header__linea"></span>
+  </div>
+  <h2 class:list={['seccion-header__titulo', { 'text-crema': light }]}>{title}</h2>
+  {subtitle && <p class:list={['seccion-header__bajada', { 'text-arena': light }]}>{subtitle}</p>}
+</div>
+
+<style>
+  .text-left {
+    text-align: left;
+  }
+  .text-crema {
+    color: var(--crema);
+  }
+  .text-arena {
+    color: var(--arena);
+  }
+</style>

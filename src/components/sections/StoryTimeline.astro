@@ -1,0 +1,206 @@
+---
+import { weddingData } from '../../data/wedding';
+import SectionHeader from '../common/SectionHeader.astro';
+import HeartIcon from '../icons/HeartIcon.astro';
+---
+<section class="seccion seccion--arena" id="historia" aria-label="Nuestra historia de amor">
+  <div class="contenedor">
+    <SectionHeader
+      title={weddingData.story.title}
+      subtitle={weddingData.story.subtitle}
+    />
+
+    <ol class="linea" aria-label="Línea de tiempo de nuestra relación">
+      {weddingData.story.milestones.map((item, index) => (
+        <li class="linea__item" data-anim={index % 2 === 0 ? "slide-left" : "slide-right"}>
+          <div class="linea__anio-col">
+            <span class="linea__anio">{item.year}</span>
+          </div>
+
+          <div class="linea__nodo" aria-hidden="true">
+            <span class="linea__punto"></span>
+          </div>
+
+          <div class="linea__cuerpo">
+            <h3 class="linea__titulo">{item.title}</h3>
+            <p class="linea__texto">{item.description}</p>
+          </div>
+
+          <div class="linea__foto-col">
+            <figure class="linea__figura">
+              <img
+                class="linea__foto"
+                src={item.image}
+                alt={item.alt}
+                width="600"
+                height="450"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="historia-nota">
+      <HeartIcon size={22} class="historia-nota__icono" />
+      <p class="historia-nota__texto">
+        {weddingData.story.footnote}
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .linea {
+    position: relative;
+    max-width: 58rem;
+    margin-inline: auto;
+    padding: 1rem 0;
+  }
+
+  /* Línea conectora central */
+  .linea::before {
+    content: "";
+    position: absolute;
+    top: 1.5rem;
+    bottom: 2rem;
+    left: 1.25rem;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--oliva), var(--terracota), var(--dorado));
+    opacity: 0.5;
+  }
+
+  .linea__item {
+    position: relative;
+    display: grid;
+    gap: 1.25rem;
+    padding: 0 0 3.5rem 3rem;
+  }
+
+  .linea__item:last-child {
+    padding-bottom: 0;
+  }
+
+  .linea__nodo {
+    position: absolute;
+    left: 0.75rem;
+    top: 0.75rem;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+
+  .linea__punto {
+    display: block;
+    width: 1.25rem;
+    height: 1.25rem;
+    background: var(--arena);
+    border: 3px solid var(--terracota);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(201, 123, 90, 0.2);
+  }
+
+  .linea__anio {
+    font-family: var(--fuente-titulo);
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--terracota-oscuro);
+  }
+
+  .linea__cuerpo {
+    background: rgba(255, 255, 255, 0.6);
+    padding: 1.5rem;
+    border-radius: var(--radio-md);
+    border: 1px solid rgba(184, 167, 140, 0.4);
+    box-shadow: var(--sombra-suave);
+  }
+
+  .linea__titulo {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    color: var(--oliva-oscuro);
+  }
+
+  .linea__texto {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--carbon);
+  }
+
+  .linea__figura {
+    margin: 0;
+    border-radius: var(--radio-md);
+    overflow: hidden;
+    box-shadow: var(--sombra-card);
+    aspect-ratio: 4 / 3;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+  }
+
+  .linea__foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .linea__figura:hover .linea__foto {
+    transform: scale(1.03);
+  }
+
+  @media (min-width: 800px) {
+    .linea::before {
+      left: 7.5rem;
+    }
+
+    .linea__item {
+      grid-template-columns: 6rem 1fr 14rem;
+      gap: 2.5rem;
+      align-items: start;
+      padding-left: 0;
+    }
+
+    .linea__nodo {
+      left: 7.5rem;
+      top: 1rem;
+    }
+
+    .linea__anio-col {
+      text-align: right;
+      padding-top: 0.25rem;
+    }
+
+    .linea__cuerpo {
+      margin-left: 2rem;
+    }
+  }
+
+  .historia-nota {
+    margin: 4.5rem auto 0;
+    max-width: 36rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.75rem 2rem;
+    background: rgba(245, 239, 230, 0.75);
+    border: 1px dashed var(--oliva);
+    border-radius: var(--radio-md);
+  }
+
+  .historia-nota__icono {
+    color: var(--terracota);
+  }
+
+  .historia-nota__texto {
+    margin: 0;
+    font-family: var(--fuente-titulo);
+    font-style: italic;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    color: var(--oliva-oscuro);
+  }
+</style>

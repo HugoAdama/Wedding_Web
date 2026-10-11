@@ -1,0 +1,50 @@
+---
+import { weddingData } from '../../data/wedding';
+import SectionHeader from '../common/SectionHeader.astro';
+import WhatsAppIcon from '../icons/WhatsAppIcon.astro';
+import MailIcon from '../icons/MailIcon.astro';
+---
+<section class="seccion seccion--arena" id="contacto" aria-label="Canales de contacto">
+  <div class="contenedor contenedor--angosto contacto-bloque">
+    <SectionHeader
+      title="¿Tienes alguna duda?"
+      subtitle="Escríbenos con toda confianza. Te responderemos a la brevedad."
+    />
+
+    <div class="contacto-botones" data-anim="fade-up" data-anim-delay="1">
+      <a
+        class="boton boton--dorado"
+        href={weddingData.contact.whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contactar a Camila y Mateo por WhatsApp"
+      >
+        <WhatsAppIcon size={18} />
+        <span>Escríbenos por WhatsApp</span>
+      </a>
+
+      <a
+        class="boton boton--secundario"
+        href={`mailto:${weddingData.contact.email}?subject=${encodeURIComponent(weddingData.contact.emailSubject)}`}
+        aria-label="Enviar correo electrónico"
+      >
+        <MailIcon size={18} />
+        <span>{weddingData.contact.email}</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contacto-bloque {
+    text-align: center;
+  }
+
+  .contacto-botones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+</style>

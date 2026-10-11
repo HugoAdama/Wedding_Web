@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/sections/Header.astro';
+import Hero from '../components/sections/Hero.astro';
+import StoryTimeline from '../components/sections/StoryTimeline.astro';
+import CeremonyReception from '../components/sections/CeremonyReception.astro';
+import ScheduleTimeline from '../components/sections/ScheduleTimeline.astro';
+import DressCode from '../components/sections/DressCode.astro';
+import PhotoGallery from '../components/sections/PhotoGallery.astro';
+import Lodging from '../components/sections/Lodging.astro';
+import GiftRegistry from '../components/sections/GiftRegistry.astro';
+import RsvpSection from '../components/sections/RsvpSection.astro';
+import ContingencyPlan from '../components/sections/ContingencyPlan.astro';
+import Faq from '../components/sections/Faq.astro';
+import Contact from '../components/sections/Contact.astro';
+import Footer from '../components/sections/Footer.astro';
+---
+<Layout>
+  <Header />
+
+  <main id="contenido-principal">
+    <!-- 1. Bienvenida y Conexión Emocional -->
+    <Hero />
+    <StoryTimeline />
+
+    <!-- 2. El Gran Día: Dónde, Cuándo y Qué ponerse -->
+    <CeremonyReception />
+    <ScheduleTimeline />
+    <DressCode />
+
+    <!-- 3. Galería de Recuerdos -->
+    <PhotoGallery />
+
+    <!-- 4. Logística y Tranquilidad del Invitado (Resuelve dudas antes de confirmar) -->
+    <Lodging />
+    <ContingencyPlan />
+    <Faq />
+
+    <!-- 5. Clímax de Acción: Confirmación, Regalos y Contacto -->
+    <RsvpSection />
+    <GiftRegistry />
+    <Contact />
+  </main>
+
+  <Footer />
+</Layout>

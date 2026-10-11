@@ -1,0 +1,172 @@
+---
+import { weddingData } from '../../data/wedding';
+import ClockIcon from '../icons/ClockIcon.astro';
+
+interface Props {
+  targetDate?: string;
+}
+
+const { targetDate = weddingData.date.iso } = Astro.props;
+---
+<div class="cuenta-modulo" data-target-date={targetDate}>
+  <div class="cuenta-modulo__header">
+    <ClockIcon size={18} class="cuenta-modulo__icono" />
+    <span class="cuenta-modulo__subtitulo">Faltan para el gran día</span>
+  </div>
+
+  <div class="cuenta" role="timer" aria-live="polite" aria-label="Cuenta regresiva para la boda">
+    <div class="cuenta__item">
+      <span class="cuenta__num" id="dias">--</span>
+      <span class="cuenta__txt">Días</span>
+    </div>
+    <div class="cuenta__separador" aria-hidden="true">:</div>
+    <div class="cuenta__item">
+      <span class="cuenta__num" id="horas">--</span>
+      <span class="cuenta__txt">Horas</span>
+    </div>
+    <div class="cuenta__separador" aria-hidden="true">:</div>
+    <div class="cuenta__item">
+      <span class="cuenta__num" id="minutos">--</span>
+      <span class="cuenta__txt">Minutos</span>
+    </div>
+    <div class="cuenta__separador" aria-hidden="true">:</div>
+    <div class="cuenta__item">
+      <span class="cuenta__num" id="segundos">--</span>
+      <span class="cuenta__txt">Segundos</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initCountdown() {
+    const container = document.querySelector('.cuenta-modulo') as HTMLElement | null;
+    if (!container) return;
+
+    const targetDateStr = container.dataset.targetDate || '2026-11-14T16:00:00-05:00';
+    const targetDate = new Date(targetDateStr).getTime();
+
+    const diasEl = document.getElementById('dias');
+    const horasEl = document.getElementById('horas');
+    const minutosEl = document.getElementById('minutos');
+    const segundosEl = document.getElementById('segundos');
+
+    function update() {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference <= 0) {
+        if (diasEl) diasEl.textContent = '00';
+        if (horasEl) horasEl.textContent = '00';
+        if (minutosEl) minutosEl.textContent = '00';
+        if (segundosEl) segundosEl.textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      if (diasEl) diasEl.textContent = String(days).padStart(2, '0');
+      if (horasEl) horasEl.textContent = String(hours).padStart(2, '0');
+      if (minutosEl) minutosEl.textContent = String(minutes).padStart(2, '0');
+      if (segundosEl) segundosEl.textContent = String(seconds).padStart(2, '0');
+    }
+
+    update();
+    setInterval(update, 1000);
+  }
+
+  // Inicializar al cargar y ante cambios de página
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCountdown);
+  } else {
+    initCountdown();
+  }
+</script>
+
+<style>
+  .cuenta-modulo {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--oliva-profundo);
+    color: var(--crema);
+    border-radius: var(--radio-md);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--sombra-card);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+  }
+
+  .cuenta-modulo__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+    color: var(--dorado);
+  }
+
+  .cuenta-modulo__subtitulo {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .cuenta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .cuenta__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 3.5rem;
+  }
+
+  .cuenta__separador {
+    font-family: var(--fuente-titulo);
+    font-size: 2rem;
+    color: var(--dorado);
+    line-height: 1;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+  }
+
+  .cuenta__num {
+    font-family: var(--fuente-titulo);
+    font-size: clamp(2rem, 5vw, 2.7rem);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--dorado);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cuenta__txt {
+    margin-top: 0.35rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--crema);
+    opacity: 0.85;
+  }
+
+  @media (max-width: 480px) {
+    .cuenta-modulo {
+      padding: 1rem 0.75rem;
+      width: 100%;
+    }
+    .cuenta__item {
+      min-width: 2.75rem;
+    }
+    .cuenta__num {
+      font-size: 1.85rem;
+    }
+    .cuenta__separador {
+      font-size: 1.5rem;
+      margin-bottom: 0.85rem;
+    }
+  }
+</style>

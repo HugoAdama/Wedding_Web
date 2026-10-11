@@ -1,0 +1,205 @@
+---
+import { weddingData } from '../../data/wedding';
+import OliveBranch from '../icons/OliveBranch.astro';
+---
+
+<footer class="pie" aria-label="Pie de página">
+  <div class="contenedor pie__contenido">
+    <!-- Insignia Demo / Portafolio -->
+    <div class="pie__badge-demo" data-anim="fade-in">
+      <span class="pie__badge-dot" aria-hidden="true"></span>
+      <span>Invitación Web Demo · Proyecto de Portafolio</span>
+    </div>
+
+    <!-- Ramita de olivo ornamental -->
+    <div class="pie__olivo" aria-hidden="true" data-anim="fade-in">
+      <OliveBranch width="48" height="86" />
+    </div>
+
+    <p class="pie__hashtag" data-anim="fade-up">{weddingData.couple.hashtag}</p>
+    <p class="pie__fecha" data-anim="fade-up" data-anim-delay="1">
+      {weddingData.date.display} · {weddingData.date.city}
+    </p>
+
+    <div class="pie__separador" aria-hidden="true"></div>
+
+    <!-- Tarjeta de autoría y presentación demo -->
+    <div class="pie__autor-tarjeta" data-anim="scale-up" data-anim-delay="2">
+      <div class="pie__autor-header">
+        <svg class="pie__autor-icono" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        <p class="pie__autor-titulo">
+          Desarrollado por <span class="pie__autor-nombre">Hugo Adama</span>
+        </p>
+      </div>
+
+      <p class="pie__autor-desc">
+        Invitación web interactiva de demostración para bodas y celebraciones exclusivas. Diseñada con arquitectura moderna, animaciones fluidas, navegación responsiva y confirmación automatizada vía WhatsApp.
+      </p>
+
+      <div class="pie__tech-tags">
+        <span class="pie__tag">Astro 7</span>
+        <span class="pie__tag">TypeScript</span>
+        <span class="pie__tag">Vanilla CSS</span>
+        <span class="pie__tag">WebP Optimizado</span>
+        <span class="pie__tag">WhatsApp API</span>
+      </div>
+    </div>
+
+    <p class="pie__privacidad">
+      {weddingData.privacy.summary}
+    </p>
+  </div>
+</footer>
+
+<style>
+  .pie {
+    padding: clamp(3.5rem, 8vw, 5.5rem) 1.5rem 3rem;
+    text-align: center;
+    color: var(--crema);
+    background: radial-gradient(circle at 50% 0%, #2f3a29 0%, #1e241a 100%);
+    border-top: 1px solid rgba(201, 169, 97, 0.25);
+    position: relative;
+  }
+
+  .pie__contenido {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Badge Demo */
+  .pie__badge-demo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.4rem 1.1rem;
+    background: rgba(201, 169, 97, 0.12);
+    border: 1px solid rgba(201, 169, 97, 0.35);
+    border-radius: var(--radio-full);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dorado);
+    margin-bottom: 1.5rem;
+  }
+
+  .pie__badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--dorado);
+    box-shadow: 0 0 8px rgba(201, 169, 97, 0.8);
+    display: inline-block;
+  }
+
+  .pie__olivo {
+    color: var(--dorado);
+    margin-bottom: 0.75rem;
+    opacity: 0.9;
+  }
+
+  .pie__hashtag {
+    font-family: var(--fuente-script);
+    font-size: clamp(2.4rem, 8vw, 3.8rem);
+    color: var(--dorado);
+    margin: 0 0 0.5rem;
+    line-height: 1.15;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .pie__fecha {
+    font-family: var(--fuente-titulo);
+    font-size: 1.25rem;
+    color: var(--arena);
+    margin: 0 0 2rem;
+  }
+
+  .pie__separador {
+    width: 4rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 169, 97, 0.6), transparent);
+    margin-bottom: 2rem;
+  }
+
+  /* Tarjeta de autoría */
+  .pie__autor-tarjeta {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(201, 169, 97, 0.28);
+    border-radius: var(--radio-md);
+    padding: 1.6rem 2rem;
+    max-width: 40rem;
+    width: 100%;
+    margin: 0 auto 1.75rem;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .pie__autor-header {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .pie__autor-icono {
+    color: var(--dorado);
+    flex-shrink: 0;
+  }
+
+  .pie__autor-titulo {
+    font-size: 1.05rem;
+    margin: 0;
+    color: var(--crema);
+  }
+
+  .pie__autor-nombre {
+    font-weight: 700;
+    color: #ffffff;
+    border-bottom: 1.5px solid var(--dorado);
+    padding-bottom: 1px;
+    letter-spacing: 0.02em;
+  }
+
+  .pie__autor-desc {
+    font-size: 0.86rem;
+    color: var(--arena);
+    margin: 0;
+    line-height: 1.55;
+    max-width: 34rem;
+  }
+
+  .pie__tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .pie__tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radio-sm);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(232, 220, 200, 0.15);
+    color: #d8cebe;
+    letter-spacing: 0.02em;
+  }
+
+  .pie__privacidad {
+    font-size: 0.78rem;
+    color: #8c8578;
+    margin: 0;
+    max-width: 36rem;
+    line-height: 1.5;
+  }
+</style>

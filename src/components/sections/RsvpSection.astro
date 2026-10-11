@@ -1,0 +1,427 @@
+---
+import { weddingData } from '../../data/wedding';
+import SectionHeader from '../common/SectionHeader.astro';
+import WhatsAppIcon from '../icons/WhatsAppIcon.astro';
+import ShieldCheckIcon from '../icons/ShieldCheckIcon.astro';
+import CheckIcon from '../icons/CheckIcon.astro';
+
+// Subcomponentes modulares
+import AttendanceSelector from './rsvp/AttendanceSelector.astro';
+import GuestStepper from './rsvp/GuestStepper.astro';
+import MenuSelector from './rsvp/MenuSelector.astro';
+---
+
+<section class="seccion seccion--oliva" id="rsvp" aria-label="Confirmación de asistencia">
+  <div class="contenedor rsvp-contenedor">
+    <SectionHeader
+      title={weddingData.rsvp.title}
+      subtitle={weddingData.rsvp.subtitle}
+      light={true}
+    />
+
+    <!-- Aviso de fecha límite -->
+    <div class="rsvp-limite-aviso" data-anim="fade-in">
+      <div class="rsvp-limite-aviso__icono">
+        <CheckIcon size={16} />
+      </div>
+      <p>
+        Por favor, confirma tu asistencia a más tardar el <strong>{weddingData.rsvp.deadline}</strong>.
+      </p>
+    </div>
+
+    <!-- Formulario interactivo generador de WhatsApp -->
+    <form class="rsvp-formulario" id="formulario-rsvp" novalidate data-anim="scale-up" data-anim-delay="1">
+      <!-- Fila 1: Nombre y Apellidos -->
+      <div class="campo">
+        <label for="rsvp-nombre">
+          <span class="campo__label-texto">Nombre y Apellidos</span>
+          <span class="campo__requerido" aria-hidden="true">*</span>
+        </label>
+        <input
+          type="text"
+          id="rsvp-nombre"
+          name="nombre"
+          autocomplete="name"
+          placeholder="Ej. Andrés Morales Valdivia"
+          required
+        />
+        <span class="campo__error" id="error-nombre">Por favor ingresa tu nombre y apellido</span>
+      </div>
+
+      <!-- Fila 2: Asistencia (Subcomponente modular) -->
+      <AttendanceSelector />
+
+      <!-- Grupo condicional para invitados que asisten -->
+      <div class="campos-asistentes" id="campos-asistentes">
+        <!-- Fila 3: Personas y Alergias en dos columnas equilibradas -->
+        <div class="campos-fila-dos">
+          <!-- Subcomponente Stepper de personas -->
+          <GuestStepper />
+
+          <!-- Alergias o requerimientos -->
+          <div class="campo" id="campo-alergias">
+            <label for="rsvp-alergias">
+              <span class="campo__label-texto">Alergias o requerimientos</span>
+              <small class="campo__opcional">(opcional)</small>
+            </label>
+            <input
+              type="text"
+              id="rsvp-alergias"
+              name="alergias"
+              placeholder="Ej. Celíaco, sin lactosa, ninguna..."
+            />
+          </div>
+        </div>
+
+        <!-- Fila 4: Selección de Menú (Subcomponente modular) -->
+        <MenuSelector />
+      </div>
+
+      <!-- Fila 5: Mensaje o dedicatoria -->
+      <div class="campo">
+        <label for="rsvp-mensaje">
+          <span class="campo__label-texto" id="label-mensaje">Mensaje o dedicatoria para los novios</span>
+          <small class="campo__opcional">(opcional)</small>
+        </label>
+        <textarea
+          id="rsvp-mensaje"
+          name="mensaje"
+          rows="2"
+          placeholder="¡Dejadnos un mensaje, buenos deseos o recomiéndanos una canción!"
+        ></textarea>
+      </div>
+
+      <!-- Botón de envío y texto de ayuda -->
+      <div class="rsvp-formulario__footer">
+        <button type="submit" class="boton boton--dorado rsvp-formulario__btn-submit" id="btn-submit">
+          <WhatsAppIcon size={20} />
+          <span id="btn-submit-texto">Enviar confirmación por WhatsApp</span>
+        </button>
+
+        <p class="rsvp-formulario__ayuda">
+          Se abrirá WhatsApp en tu teléfono o navegador con el mensaje estructurado listo para enviar.
+        </p>
+      </div>
+    </form>
+
+    <!-- Opciones alternativas de confirmación y badge de privacidad -->
+    <div class="rsvp-alternativas" data-anim="fade-in">
+      <p class="rsvp-alternativas__texto">
+        ¿Prefieres confirmar directamente por llamada o correo?
+      </p>
+      <div class="rsvp-alternativas__acciones">
+        <a class="boton boton--fantasma boton--chico" href={`tel:${weddingData.rsvp.whatsappNumber}`}>
+          Llamar al {weddingData.rsvp.formattedPhone}
+        </a>
+        <a class="boton boton--fantasma boton--chico" href={`mailto:${weddingData.contact.email}?subject=Confirmación%20de%20asistencia`}>
+          Enviar correo electrónico
+        </a>
+      </div>
+
+      <div class="privacidad-badge">
+        <ShieldCheckIcon size={18} class="privacidad-badge__icono" />
+        <p class="privacidad-badge__texto">
+          <strong>Privacidad garantizada:</strong> No almacenamos tus datos en servidores. Tu confirmación se gestiona directamente en tu chat de WhatsApp.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { generarUrlWhatsApp } from '../../utils/whatsapp';
+
+  const form = document.getElementById('formulario-rsvp') as HTMLFormElement | null;
+  const radioButtons = document.querySelectorAll('input[name="asistencia"]');
+  const camposAsistentes = document.getElementById('campos-asistentes');
+  const errorNombre = document.getElementById('error-nombre');
+  const inputNombre = document.getElementById('rsvp-nombre') as HTMLInputElement | null;
+  const inputPersonas = document.getElementById('rsvp-personas') as HTMLInputElement | null;
+  const btnMenos = document.getElementById('btn-menos');
+  const btnMas = document.getElementById('btn-mas');
+  const stepperTexto = document.getElementById('stepper-texto');
+  const btnSubmitTexto = document.getElementById('btn-submit-texto');
+  const textareaMensaje = document.getElementById('rsvp-mensaje') as HTMLTextAreaElement | null;
+
+  // Lógica del contador de personas
+  const actualizarPersonas = (nuevoValor: number) => {
+    if (!inputPersonas || !stepperTexto) return;
+    const valor = Math.max(1, Math.min(10, nuevoValor));
+    inputPersonas.value = valor.toString();
+    stepperTexto.textContent = valor === 1 ? '1 persona' : `${valor} personas`;
+  };
+
+  btnMenos?.addEventListener('click', () => {
+    actualizarPersonas(parseInt(inputPersonas?.value || '1', 10) - 1);
+  });
+
+  btnMas?.addEventListener('click', () => {
+    actualizarPersonas(parseInt(inputPersonas?.value || '1', 10) + 1);
+  });
+
+  // Manejar alternancia entre Asistir o No Asistir
+  radioButtons.forEach((radio) => {
+    radio.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (camposAsistentes) {
+        if (target.value === 'no') {
+          camposAsistentes.style.display = 'none';
+          if (btnSubmitTexto) btnSubmitTexto.textContent = 'Enviar respuesta por WhatsApp';
+          if (textareaMensaje) textareaMensaje.placeholder = 'Dejadnos unas palabras o mensaje para los novios...';
+        } else {
+          camposAsistentes.style.display = 'flex';
+          if (btnSubmitTexto) btnSubmitTexto.textContent = 'Enviar confirmación por WhatsApp';
+          if (textareaMensaje) textareaMensaje.placeholder = '¡Dejadnos un mensaje, buenos deseos o recomiéndanos una canción!';
+        }
+      }
+    });
+  });
+
+  // Envío del formulario
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const nombre = inputNombre?.value.trim();
+    if (!nombre) {
+      if (errorNombre) errorNombre.style.display = 'block';
+      inputNombre?.focus();
+      return;
+    }
+    if (errorNombre) errorNombre.style.display = 'none';
+
+    const asistencia = ((document.querySelector('input[name="asistencia"]:checked') as HTMLInputElement)?.value as 'si' | 'no') || 'si';
+    const personas = parseInt(inputPersonas?.value || '1', 10);
+    const menuSeleccionado = (document.querySelector('input[name="menu"]:checked') as HTMLInputElement)?.value || 'Menú Tradicional';
+    const alergias = (document.getElementById('rsvp-alergias') as HTMLInputElement)?.value.trim() || 'Ninguna';
+    const mensaje = textareaMensaje?.value.trim() || '';
+
+    const url = generarUrlWhatsApp({
+      nombre,
+      asistencia,
+      personas,
+      menu: menuSeleccionado,
+      restricciones: alergias,
+      mensaje,
+    });
+
+    window.open(url, '_blank', 'noopener,noreferrer');
+  });
+</script>
+
+<style>
+  .rsvp-contenedor {
+    max-width: 860px;
+    margin-inline: auto;
+  }
+
+  /* Aviso de fecha límite */
+  .rsvp-limite-aviso {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    background: rgba(201, 169, 97, 0.15);
+    border: 1px solid var(--dorado);
+    border-radius: var(--radio-full);
+    padding: 0.65rem 1.4rem;
+    margin: 0 auto 2.5rem;
+    color: var(--crema);
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .rsvp-limite-aviso__icono {
+    color: var(--dorado);
+    display: flex;
+    align-items: center;
+  }
+
+  .rsvp-limite-aviso p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .rsvp-limite-aviso strong {
+    color: var(--dorado);
+  }
+
+  /* Tarjeta de Formulario */
+  .rsvp-formulario {
+    background: #ffffff;
+    color: var(--carbon);
+    border-radius: var(--radio-lg);
+    padding: clamp(1.75rem, 5vw, 2.75rem);
+    box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.35);
+    border-top: 4px solid var(--dorado);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .campo label {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--oliva-oscuro);
+    line-height: 1.4;
+  }
+
+  .campo__label-texto {
+    color: var(--oliva-oscuro);
+  }
+
+  .campo__requerido {
+    color: var(--terracota-oscuro);
+  }
+
+  .campo__opcional {
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: #888;
+  }
+
+  .campo input[type="text"],
+  .campo textarea {
+    width: 100%;
+    font-size: 0.95rem;
+    font-family: inherit;
+    border: 1.5px solid #d4c9b8;
+    border-radius: var(--radio-sm);
+    background-color: #faf8f5;
+    color: var(--carbon);
+    box-sizing: border-box;
+    transition: all var(--transicion-base);
+  }
+
+  .campo input[type="text"] {
+    height: 50px;
+    padding: 0 1.1rem;
+  }
+
+  .campo textarea {
+    padding: 0.85rem 1.1rem;
+    resize: vertical;
+    min-height: 4.5rem;
+    line-height: 1.5;
+  }
+
+  .campo input[type="text"]:focus,
+  .campo textarea:focus {
+    outline: none;
+    border-color: var(--oliva);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(107, 122, 90, 0.2);
+  }
+
+  .campo__error {
+    display: none;
+    font-size: 0.82rem;
+    color: #c0392b;
+    font-weight: 500;
+  }
+
+  .campos-asistentes {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .campos-fila-dos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    align-items: end;
+  }
+
+  @media (min-width: 600px) {
+    .campos-fila-dos {
+      grid-template-columns: auto 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  .rsvp-formulario__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .rsvp-formulario__btn-submit {
+    width: 100%;
+    justify-content: center;
+    font-size: 1.05rem;
+    padding-block: 1rem;
+    box-shadow: 0 6px 18px rgba(201, 169, 97, 0.35);
+  }
+
+  .rsvp-formulario__ayuda {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #777;
+    text-align: center;
+  }
+
+  /* Opciones alternativas */
+  .rsvp-alternativas {
+    margin-top: 3.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .rsvp-alternativas__texto {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--arena);
+  }
+
+  .rsvp-alternativas__acciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .privacidad-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radio-md);
+    padding: 0.75rem 1.25rem;
+    margin-top: 1.5rem;
+    max-width: 540px;
+    text-align: left;
+  }
+
+  .privacidad-badge__icono {
+    color: var(--dorado);
+    flex-shrink: 0;
+  }
+
+  .privacidad-badge__texto {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: var(--arena);
+  }
+
+  .privacidad-badge__texto strong {
+    color: var(--crema);
+  }
+</style>

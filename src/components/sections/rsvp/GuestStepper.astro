@@ -1,0 +1,97 @@
+---
+// Selector interactivo de cantidad de asistentes
+---
+
+<div class="campo">
+  <label for="rsvp-personas">
+    <span class="campo__label-texto">Número de personas</span>
+  </label>
+  <div class="stepper-contenedor">
+    <button type="button" class="stepper-btn" id="btn-menos" aria-label="Restar una persona">−</button>
+    <input
+      type="number"
+      id="rsvp-personas"
+      name="personas"
+      min="1"
+      max="10"
+      value="1"
+      readonly
+    />
+    <button type="button" class="stepper-btn" id="btn-mas" aria-label="Sumar una persona">+</button>
+    <span class="stepper-indicador" id="stepper-texto">1 persona</span>
+  </div>
+</div>
+
+<style>
+  .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .campo label {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--oliva-oscuro);
+    line-height: 1.4;
+  }
+
+  .campo__label-texto {
+    color: var(--oliva-oscuro);
+  }
+
+  .stepper-contenedor {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--arena-suave);
+    border: 1.5px solid var(--arena);
+    border-radius: var(--radio-md);
+    padding: 0.4rem 0.6rem;
+    width: fit-content;
+  }
+
+  .stepper-btn {
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 50%;
+    border: 1px solid var(--arena);
+    background: #ffffff;
+    color: var(--carbon);
+    font-size: 1.3rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    line-height: 1;
+  }
+
+  .stepper-btn:hover {
+    background: var(--oliva);
+    color: #fff;
+    border-color: var(--oliva);
+    transform: scale(1.05);
+  }
+
+  .stepper-btn:active {
+    transform: scale(0.95);
+  }
+
+  .stepper-contenedor input {
+    display: none;
+  }
+
+  .stepper-indicador {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--oliva-oscuro);
+    min-width: 6.5rem;
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+interface Props {
+  class?: string;
+  size?: number | string;
+}
+
+const { class: className = '', size = 24 } = Astro.props;
+---
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.75"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  <!-- Cruz en campanario -->
+  <line x1="12" y1="2" x2="12" y2="6" />
+  <line x1="10" y1="4" x2="14" y2="4" />
+  <!-- Fachada de iglesia -->
+  <path d="M12 6L4 11v10h16V11L12 6z" />
+  <!-- Puerta arqueada -->
+  <path d="M10 21v-4a2 2 0 0 1 4 0v4" />
+  <!-- Rosetón o ventana circular -->
+  <circle cx="12" cy="12" r="1.5" />
+</svg>

@@ -1,0 +1,175 @@
+---
+import { weddingData } from '../../data/wedding';
+import SectionHeader from '../common/SectionHeader.astro';
+import LightboxModal from '../common/LightboxModal.astro';
+---
+
+<section class="seccion" id="galeria" aria-label="Galería fotográfica de recuerdos">
+  <div class="contenedor">
+    <SectionHeader
+      title="Nuestros Recuerdos"
+      subtitle="Instantes compartidos en el camino que hoy nos reúne aquí."
+    />
+
+    <div class="galeria-rejilla">
+      {weddingData.gallery.map((foto, index) => (
+        <figure class="galeria-figura" data-anim="scale-up" data-anim-delay={String((index % 3) + 1)}>
+          <button
+            type="button"
+            class="galeria-trigger"
+            data-lightbox-trigger
+            data-index={index}
+            aria-label={`Ver foto en tamaño completo: ${foto.alt}`}
+          >
+            <img
+              src={foto.src}
+              alt={foto.alt}
+              width={foto.width}
+              height={foto.height}
+              loading="lazy"
+              decoding="async"
+              class="galeria-img"
+            />
+            <div class="galeria-overlay">
+              <span class="galeria-zoom-icono">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  <line x1="11" y1="8" x2="11" y2="14"></line>
+                  <line x1="8" y1="11" x2="14" y2="11"></line>
+                </svg>
+              </span>
+            </div>
+            <figcaption class="galeria-caption">
+              <span class="galeria-caption__linea"></span>
+              <span class="galeria-caption__texto">{foto.alt}</span>
+            </figcaption>
+          </button>
+        </figure>
+      ))}
+    </div>
+  </div>
+
+  <!-- Modal Lightbox modular desacoplado -->
+  <LightboxModal />
+</section>
+
+<style>
+  .galeria-rejilla {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .galeria-figura {
+    margin: 0;
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-radius: var(--radio-md);
+    background-color: var(--arena);
+    box-shadow: var(--sombra-card);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .galeria-trigger {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    text-align: inherit;
+    position: relative;
+    font: inherit;
+    color: inherit;
+  }
+
+  .galeria-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    display: block;
+  }
+
+  .galeria-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(46, 56, 39, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .galeria-zoom-icono {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--oliva-oscuro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    transform: scale(0.85);
+    transition: transform 0.25s ease;
+  }
+
+  .galeria-figura:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-elevada);
+  }
+
+  .galeria-figura:hover .galeria-img {
+    transform: scale(1.06);
+  }
+
+  .galeria-figura:hover .galeria-overlay {
+    opacity: 1;
+  }
+
+  .galeria-figura:hover .galeria-zoom-icono {
+    transform: scale(1);
+  }
+
+  .galeria-caption {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 1.5rem 1rem 1rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: var(--crema);
+    font-size: 0.82rem;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .galeria-figura:hover .galeria-caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (min-width: 768px) {
+    .galeria-rejilla {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+      padding-bottom: 2.5rem;
+    }
+
+    /* Efecto editorial escalonado */
+    .galeria-figura:nth-child(3n + 2) {
+      transform: translateY(2rem);
+    }
+
+    .galeria-figura:nth-child(3n + 2):hover {
+      transform: translateY(1.75rem);
+    }
+  }
+</style>

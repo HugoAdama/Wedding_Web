@@ -1,0 +1,77 @@
+---
+import CalendarIcon from '../icons/CalendarIcon.astro';
+import DownloadIcon from '../icons/DownloadIcon.astro';
+import { weddingData } from '../../data/wedding';
+
+const eventTitle = encodeURIComponent(`${weddingData.couple.bride} & ${weddingData.couple.groom} · Boda`);
+const eventDetails = encodeURIComponent(`Ceremonia en ${weddingData.ceremony.venue} (4:00 p.m.) y Recepción en ${weddingData.reception.venue} (6:30 p.m.). ¡Celebremos juntos!`);
+const eventLocation = encodeURIComponent(`${weddingData.ceremony.venue}, ${weddingData.ceremony.address}`);
+// UTC: Lima es UTC-5. 14 Nov 2026 16:00 UTC-5 = 21:00 UTC. Termina 15 Nov 02:00 UTC-5 = 07:00 UTC.
+const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${eventTitle}&dates=20261114T210000Z/20261115T070000Z&details=${eventDetails}&location=${eventLocation}`;
+---
+<div class="calendario-accion">
+  <a
+    href={googleCalUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="boton boton--secundario boton--chico"
+    aria-label="Agregar la boda a Google Calendar"
+  >
+    <CalendarIcon size={18} />
+    <span>Agregar a Google Calendar</span>
+  </a>
+
+  <button
+    type="button"
+    id="btn-descargar-ics"
+    class="boton boton--secundario boton--chico"
+    aria-label="Descargar archivo iCalendar (.ics)"
+  >
+    <DownloadIcon size={18} />
+    <span>Descargar .ics (Apple / Outlook)</span>
+  </button>
+</div>
+
+<script>
+  const btnIcs = document.getElementById('btn-descargar-ics');
+  if (btnIcs) {
+    btnIcs.addEventListener('click', () => {
+      const icsData = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Camila y Mateo//Invitacion de Boda//ES',
+        'CALSCALE:GREGORIAN',
+        'METHOD:PUBLISH',
+        'BEGIN:VEVENT',
+        'UID:boda-camila-mateo-2026@camilaymateo.pe',
+        'DTSTAMP:20261114T160000Z',
+        'DTSTART:20261114T210000Z',
+        'DTEND:20261115T070000Z',
+        'SUMMARY:Boda de Camila & Mateo',
+        'DESCRIPTION:Nos casamos el 14 de noviembre de 2026. Ceremonia: Parroquia San José (Miraflores) 4:00 p.m. Recepción: Hacienda Los Olivos (Cieneguilla) 6:30 p.m.',
+        'LOCATION:Parroquia San José, Av. Larco 1234, Miraflores, Lima',
+        'STATUS:CONFIRMED',
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+
+      const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', 'boda-camila-y-mateo-2026.ics');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
+</script>
+
+<style>
+  .calendario-accion {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+</style>

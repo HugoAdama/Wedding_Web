@@ -1,0 +1,39 @@
+:root {
+  /* Paleta cromática natural y elegante */
+  --oliva: #6B7A5A;
+  --oliva-oscuro: #4A5740;
+  --oliva-profundo: #323C2C;
+  --terracota: #C97B5A;
+  --terracota-oscuro: #A85F3F;
+  --crema: #F5EFE6;
+  --crema-pura: #FCFAF7;
+  --arena: #E8DCC8;
+  --arena-suave: #F0E8DC;
+  --carbon: #2E2E2E;
+  --dorado: #C9A961;
+  --dorado-oscuro: #9E7F38;
+
+  /* Tipografía */
+  --fuente-titulo: "Cormorant Garamond", Georgia, serif;
+  --fuente-cuerpo: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --fuente-script: "Great Vibes", "Brush Script MT", cursive;
+
+  /* Geometría y espaciados */
+  --radio-sm: 4px;
+  --radio-md: 8px;
+  --radio-lg: 16px;
+  --radio-full: 9999px;
+
+  --ancho-max: 1120px;
+  --ancho-angosto: 780px;
+  --ancho-lectura: 640px;
+  --alto-cabecera: 68px;
+
+  /* Sombras sutiles */
+  --sombra-suave: 0 4px 20px -2px rgba(74, 87, 64, 0.08);
+  --sombra-card: 0 10px 30px -4px rgba(46, 46, 46, 0.08);
+  --sombra-elevada: 0 20px 40px -8px rgba(46, 46, 46, 0.16);
+
+  /* Transiciones */
+  --transicion-base: 0.25s cubic-bezier(0.2, 0, 0, 1);
+}

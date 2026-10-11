@@ -1,0 +1,148 @@
+---
+import { weddingData } from '../../../data/wedding';
+---
+
+<div class="campo" id="campo-menu">
+  <label>
+    <span class="campo__label-texto">Tipo de menú preferido</span>
+    <span class="campo__requerido" aria-hidden="true">*</span>
+  </label>
+  <div class="menu-cards-grid">
+    {weddingData.rsvp.menuOptions.map((opt, index) => {
+      const match = opt.label.match(/Menú\s+([^()]+)\s*\(([^)]+)\)/i);
+      const titulo = match ? match[1].trim() : opt.value;
+      const detalle = match ? match[2].trim() : opt.label;
+      
+      return (
+        <label class="menu-card-opcion">
+          <input
+            type="radio"
+            name="menu"
+            value={opt.label}
+            checked={index === 0}
+          />
+          <span class="menu-card">
+            <span class="menu-card__indicador"></span>
+            <span class="menu-card__titulo">{titulo}</span>
+            <span class="menu-card__detalle">{detalle}</span>
+          </span>
+        </label>
+      );
+    })}
+  </div>
+</div>
+
+<style>
+  .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .campo label {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--oliva-oscuro);
+    line-height: 1.4;
+  }
+
+  .campo__label-texto {
+    color: var(--oliva-oscuro);
+  }
+
+  .campo__requerido {
+    color: var(--terracota-oscuro);
+  }
+
+  .menu-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 600px) {
+    .menu-cards-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .menu-card-opcion {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+  }
+
+  .menu-card-opcion input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .menu-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1.1rem 1.25rem 1.1rem 2.85rem;
+    border-radius: var(--radio-sm);
+    border: 1.5px solid var(--arena);
+    background: #ffffff;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    min-height: 5.25rem;
+    justify-content: center;
+  }
+
+  .menu-card__indicador {
+    position: absolute;
+    left: 1.1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background: #fff;
+    transition: all 0.2s ease;
+  }
+
+  .menu-card-opcion input:checked + .menu-card .menu-card__indicador {
+    border-color: var(--oliva);
+    background: var(--oliva);
+    box-shadow: inset 0 0 0 3px #fff;
+  }
+
+  .menu-card__titulo {
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: var(--carbon);
+    margin-bottom: 0.25rem;
+    line-height: 1.25;
+  }
+
+  .menu-card__detalle {
+    font-size: 0.8rem;
+    color: #666;
+    line-height: 1.35;
+  }
+
+  .menu-card-opcion:hover .menu-card {
+    border-color: var(--oliva-oscuro);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  .menu-card-opcion input:checked + .menu-card {
+    border-color: var(--oliva);
+    background: #fbfcf9;
+    box-shadow: 0 4px 14px rgba(107, 122, 90, 0.12);
+  }
+
+  .menu-card-opcion input:focus-visible + .menu-card {
+    outline: 2px solid var(--dorado);
+    outline-offset: 2px;
+  }
+</style>
