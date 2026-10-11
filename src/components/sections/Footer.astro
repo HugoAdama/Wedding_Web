@@ -31,7 +31,13 @@ import OliveBranch from '../icons/OliveBranch.astro';
           <polyline points="8 6 2 12 8 18"></polyline>
         </svg>
         <p class="pie__autor-titulo">
-          Desarrollado por <span class="pie__autor-nombre">Hugo Adama</span>
+          Desarrollado por <a
+            href="https://github.com/HugoAdama/Wedding_Web"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="pie__autor-nombre"
+            title="Ver repositorio HugoAdama/Wedding_Web en GitHub"
+          >Hugo Adama</a>
         </p>
       </div>
 
@@ -163,9 +169,18 @@ import OliveBranch from '../icons/OliveBranch.astro';
   .pie__autor-nombre {
     font-weight: 700;
     color: #ffffff;
+    text-decoration: none;
     border-bottom: 1.5px solid var(--dorado);
     padding-bottom: 1px;
     letter-spacing: 0.02em;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .pie__autor-nombre:hover,
+  .pie__autor-nombre:focus-visible {
+    color: var(--dorado);
+    border-bottom-color: #ffffff;
+    outline: none;
   }
 
   .pie__autor-desc {
