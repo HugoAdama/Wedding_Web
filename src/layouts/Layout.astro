@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { weddingData } from '../data/wedding';
 import AudioPlayer from '../components/common/AudioPlayer.astro';
 import ThemeSwitcher from '../components/common/ThemeSwitcher.astro';
+import { getAssetPath } from '../utils/path';
 
 interface Props {
   title?: string;
@@ -15,7 +16,7 @@ const {
 } = Astro.props;
 
 const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : '';
-const ogImageUrl = `${siteUrl}/images/og-image.webp`;
+const ogImageUrl = `${siteUrl}${getAssetPath('/images/og-image.webp')}`;
 ---
 <!doctype html>
 <html lang="es">
@@ -38,8 +39,8 @@ const ogImageUrl = `${siteUrl}/images/og-image.webp`;
     <meta property="og:locale" content="es_PE" />
 
     <!-- Favicon SVG moderno y Apple Touch Icon -->
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="icon" href={getAssetPath('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={getAssetPath('/favicon.svg')} />
 
     <!-- Google Fonts optimizado -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

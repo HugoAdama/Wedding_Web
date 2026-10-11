@@ -1,4 +1,5 @@
 import type { StoryMilestone, HotelOption, BankAccount, FaqItem } from '../types/wedding';
+import { getAssetPath } from '../utils/path';
 export * from '../types/wedding';
 
 export const weddingData = {
@@ -32,7 +33,7 @@ export const weddingData = {
 
   hero: {
     subtitle: 'Nos casamos',
-    image: '/images/hero-wedding.webp',
+    image: getAssetPath('/images/hero-wedding.webp'),
     imageAlt: 'Camila y Mateo en un jardín de olivos al atardecer',
   },
 
@@ -44,35 +45,35 @@ export const weddingData = {
         year: '2019',
         title: 'El comienzo',
         description: 'Nos conocimos en un proyecto de fin de ciclo universitario. Mateo llegó tarde a la primera reunión y Camila ya había organizado a todo el equipo. Él prometió redimirse con un café, y ese café se convirtió en una tradición semanal imprescindible.',
-        image: '/images/historia-2019.webp',
+        image: getAssetPath('/images/historia-2019.webp'),
         alt: 'Camila y Mateo compartiendo un café y cuadernos de estudio',
       },
       {
         year: '2020',
         title: 'La distancia',
         description: 'La cuarentena nos puso a prueba: Camila en Lima y Mateo en Arequipa. Mantuvimos viva la conexión con videollamadas interminables, películas sincronizadas a la distancia y cartas escritas a mano que hoy guardamos con infinito cariño.',
-        image: '/images/historia-2020.webp',
+        image: getAssetPath('/images/historia-2020.webp'),
         alt: 'Cartas manuscritas y la gata Miga acompañando los recuerdos',
       },
       {
         year: '2022',
         title: 'El primer gran viaje',
         description: 'Viajamos juntos a Cusco. Nos perdimos explorando las calles de piedra de Ollantaytambo, la lluvia nos sorprendió entre risas y terminamos en un café hogareño planeando nuestro futuro. Ese día supimos que éramos el mejor equipo para la vida.',
-        image: '/images/historia-2022.webp',
+        image: getAssetPath('/images/historia-2022.webp'),
         alt: 'Camila y Mateo caminando felices por las calles empedradas de Cusco',
       },
       {
         year: '2024',
         title: 'La propuesta',
         description: 'Frente al mar de Paracas y bajo una puesta de sol dorada, Mateo se arrodilló sobre la arena. Camila dio el sí con lágrimas de emoción antes de que él pudiera completar la pregunta. Fue el momento más mágico y sincero de nuestras vidas.',
-        image: '/images/historia-2024.webp',
+        image: getAssetPath('/images/historia-2024.webp'),
         alt: 'Mateo pidiéndole matrimonio a Camila en la playa al atardecer',
       },
       {
         year: '2026',
         title: 'El gran día',
         description: 'Hoy sellamos nuestra historia rodeados de nuestras familias y mejores amigos, en la parroquia donde comenzó la fe de Camila y en una cálida hacienda campestre donde celebramos nuestro amor.',
-        image: '/images/historia-2026.webp',
+        image: getAssetPath('/images/historia-2026.webp'),
         alt: 'Camila y Mateo vestidos de novios caminando entre los árboles de olivo',
       },
     ] as StoryMilestone[],
@@ -128,37 +129,37 @@ export const weddingData = {
 
   gallery: [
     {
-      src: '/images/galeria-1.webp',
+      src: getAssetPath('/images/galeria-1.webp'),
       alt: 'Detalle de alianzas de boda y ramo de olivo con flores silvestres',
       width: 700,
       height: 933,
     },
     {
-      src: '/images/galeria-2.webp',
+      src: getAssetPath('/images/galeria-2.webp'),
       alt: 'Abrazo de Camila y Mateo en el olivar iluminado por el sol',
       width: 700,
       height: 933,
     },
     {
-      src: '/images/galeria-3.webp',
+      src: getAssetPath('/images/galeria-3.webp'),
       alt: 'Camila y Mateo compartiendo un café en sus inicios',
       width: 700,
       height: 933,
     },
     {
-      src: '/images/galeria-4.webp',
+      src: getAssetPath('/images/galeria-4.webp'),
       alt: 'Banquete de boda al atardecer bajo guirnaldas de luces cálidas',
       width: 700,
       height: 933,
     },
     {
-      src: '/images/galeria-5.webp',
+      src: getAssetPath('/images/galeria-5.webp'),
       alt: 'Miga descansando plácidamente sobre las cartas de amor',
       width: 700,
       height: 933,
     },
     {
-      src: '/images/galeria-6.webp',
+      src: getAssetPath('/images/galeria-6.webp'),
       alt: 'Camila y Mateo sonriendo con alegría en la naturaleza',
       width: 700,
       height: 933,
@@ -236,7 +237,7 @@ export const weddingData = {
     title: 'Plan B & Logística de Emergencia',
     subtitle: 'Todo está planificado para que disfrutes sin preocupaciones bajo cualquier circunstancia.',
     description: 'Hemos coordinado un salón cerrado climatizado con ventanales panorámicos en caso de viento nocturno, traslados oficiales con buses privados y personal de asistencia disponible en todo momento.',
-    pdfUrl: '/plan-b-boda.pdf',
+    pdfUrl: getAssetPath('/plan-b-boda.pdf'),
     items: [
       {
         title: 'Clima en Cieneguilla',
